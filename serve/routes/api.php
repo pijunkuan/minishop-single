@@ -28,6 +28,14 @@ Route::prefix('customer')->namespace('Customer')->group(function(){
     Route::put('edit','CustomerController@update');
 });
 
+Route::prefix('admin')->namespace('Admin')->group(function(){
+   Route::post('login',"AdminController@login");
+   Route::post('refresh',"AdminController@refresh");
+   Route::get('me',"AdminController@me");
+   Route::get('logout',"AdminController@logout");
+   Route::put('edit',"AdminController@update");
+});
+
 Route::middleware('auth:customers')->group(function(){
     Route::prefix('wallet')->namespace('Wallet')->group(function(){
         Route::get('','WalletController@index');
