@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\App;
+
 return [
 
     /*
@@ -46,6 +48,11 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'customers' => [
+            'driver' => 'jwt',
+            'provider' => 'customers'
+        ]
     ],
 
     /*
@@ -70,6 +77,11 @@ return [
             'driver' => 'eloquent',
             'model' => App\User::class,
         ],
+
+        'customers' => [
+            'driver' => 'eloquent',
+            'model' => \App\Models\Customer::class
+        ]
 
         // 'users' => [
         //     'driver' => 'database',
