@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Customer\Edit;
 use App\Http\Requests\Customer\Login;
 use App\Http\Requests\Customer\Register;
 use App\Models\Customer;
@@ -36,6 +37,18 @@ class CustomerController extends Controller
             return $this->jsonErrorResponse(401,"用户认证失败");
         }
         return $this->jsonSuccessResponse($this->respondWithToken($token));
+    }
+
+    public function update(Edit $request)
+    {
+        $customer = auth('customers')->user();
+        if($request->get('username'))
+            $customer->username = $request->get('username');
+        if($request->get('password'))
+            $customer->password = Hash::make($request->get('password'));
+        $customer->save();
+        return $this->jsonSuccessResponse($this->respondWithToken(auth('customers')->refresh()),"更新成功");
+
     }
 
     public function me()

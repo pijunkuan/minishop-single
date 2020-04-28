@@ -25,10 +25,13 @@ Route::prefix('customer')->namespace('Customer')->group(function(){
     Route::post('refresh','CustomerController@refresh');
     Route::get('me','CustomerController@me');
     Route::get('logout','CustomerController@logout');
+    Route::put('edit','CustomerController@update');
 });
 
 Route::middleware('auth:customers')->group(function(){
    Route::get('wallet','Wallet\WalletController@index');
    Route::get('wallet/balance','Wallet\WalletController@balance');
 });
+
+
 
