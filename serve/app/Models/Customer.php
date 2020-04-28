@@ -43,6 +43,11 @@ class Customer extends Authenticatable implements JWTSubject
         return $this->hasMany(Wallet::class,"customer_id");
     }
 
+    public function cartItems()
+    {
+        return $this->hasMany(CartItem::class,"customer_id");
+    }
+
     public static function findAvailableUsername()
     {
         // 生成Username

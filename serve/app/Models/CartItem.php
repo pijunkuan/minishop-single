@@ -9,4 +9,9 @@ class CartItem extends Model
     public $table = "cart_items";
     public $timestamps = false;
     protected $guarded = [];
+
+    public function variant()
+    {
+        return $this->belongsTo(ProductVariant::class, "variant_id");
+    }
 }

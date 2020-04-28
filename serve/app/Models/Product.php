@@ -9,6 +9,10 @@ class Product extends Model
     public $table = "products";
     protected $guarded = [];
 
+    protected $casts = [
+      "on_sale"=>"boolean"
+    ];
+
     public function content()
     {
         return $this->hasOne(ProductContent::class,"product_id");

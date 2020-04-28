@@ -29,8 +29,17 @@ Route::prefix('customer')->namespace('Customer')->group(function(){
 });
 
 Route::middleware('auth:customers')->group(function(){
-   Route::get('wallet','Wallet\WalletController@index');
-   Route::get('wallet/balance','Wallet\WalletController@balance');
+    Route::prefix('wallet')->namespace('Wallet')->group(function(){
+        Route::get('','WalletController@index');
+        Route::get('balance','WalletController@balance');
+    });
+    Route::prefix('cart')->namespace('Cart')->group(function(){
+        Route::get('','CartController@index');
+        Route::post('','CartController@store');
+        Route::put('','CartController@update');
+        Route::delete('{variant_id}','CartController@destroy');
+    });
+
 });
 
 
