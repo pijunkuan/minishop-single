@@ -33,19 +33,19 @@ class Customer extends Authenticatable implements JWTSubject
         });
     }
 
-    public function address()
+    public function addresses()
     {
         return $this->hasMany(Customer::class,"customer_id");
     }
 
-    public function wallet()
+    public function wallets()
     {
         return $this->hasMany(Wallet::class,"customer_id");
     }
 
     public static function findAvailableUsername()
     {
-        // 订单流水号前缀
+        // 生成Username
         $prefix = "m_".date('YmdHis');
         for ($i = 0; $i < 10; $i++) {
             // 随机生成 6 位的数字
@@ -55,7 +55,6 @@ class Customer extends Authenticatable implements JWTSubject
                 return $username;
             }
         }
-//        Log::warning('find order no failed');
         return false;
     }
     /**

@@ -23,9 +23,9 @@ class CustomerController extends Controller
         ]);
         $customer->save();
         if($customer){
-            return response()->json(['msg'=>'success']);
+            return $this->jsonSuccessResponse($this->respondWithToken(auth('customers')->login($customer)),"注册成功");
         }else{
-            return response()->json(['msg'=>'创建失败']);
+            return $this->jsonErrorResponse(401,"创建失败");
         }
     }
 
@@ -33,28 +33,34 @@ class CustomerController extends Controller
     {
         $credentials = \request(['mobile','password']);
         if (!$token = auth('customers')->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return $this->jsonErrorResponse(401,"用户认证失败");
         }
-        return $this->respondWithToken($token);
+        return $this->jsonSuccessResponse($this->respondWithToken($token));
     }
 
     public function me()
     {
-        return response()->json(auth('customers')->user());
+        return $this->jsonSuccessResponse(auth('customers')->user());
     }
 
     public function refresh()
     {
-        return $this->respondWithToken(auth('customers')->refresh());
+        return $this->jsonSuccessResponse($this->respondWithToken(auth('customers')->refresh()));
+    }
+
+    public function logout()
+    {
+        auth('customers')->logout();
+        return $this->jsonSuccessResponse(null,"成功登出");
     }
 
     public function respondWithToken($token)
     {
-        return response()->json([
+        return [
             'access_token' => $token,
             'Authorization' => "Bearer ".$token,
             'token_type' => 'Bearer',
             'expires_in' => auth('customers')->factory()->getTTL() * 60
-        ]);
+        ];
     }
 }

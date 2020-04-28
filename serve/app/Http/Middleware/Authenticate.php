@@ -2,11 +2,13 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Response\jsonResponse;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 class Authenticate extends Middleware
 {
+    use jsonResponse;
     /**
      * Get the path the user should be redirected to when they are not authenticated.
      *
@@ -16,11 +18,7 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {
-            throw (new HttpResponseException(response()->json([
-                'code'=>401,
-                "msg"=>"error",
-                "data"=>null,
-            ],401)));
+            throw (new HttpResponseException($this->jsonErrorResponse(401,"error")));
 //            return route('login');
         }
     }
