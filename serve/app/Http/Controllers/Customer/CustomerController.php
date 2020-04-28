@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\Customer\Login;
+use App\Http\Requests\Customer\Register;
+use App\Models\Customer;
+use Illuminate\Support\Facades\Hash;
 
 class CustomerController extends Controller
 {
@@ -12,15 +15,22 @@ class CustomerController extends Controller
         $this->middleware('auth:customers',['except'=>['register','login']]);
     }
 
-    public function register(Request $request)
+    public function register(Register $request)
     {
-        return "ok";
+        $customer = new Customer([
+            "mobile"=>$request->get('mobile'),
+            "password"=>Hash::make($request->get('password'))
+        ]);
+        $customer->save();
+        if($customer){
+            return response()->json(['msg'=>'success']);
+        }else{
+            return response()->json(['msg'=>'创建失败']);
+        }
     }
 
-    public function login(Request $request)
+    public function login(Login $request)
     {
-        $mobile = $request->get('mobile');
-        $password = $request->get('password');
         $credentials = \request(['mobile','password']);
         if (!$token = auth('customers')->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
