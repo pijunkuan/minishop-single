@@ -13,7 +13,17 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::any('version',function(){
-   echo "mini-shop v~1.0";
+
+
+Route::any('version',function() {
+    echo "mini-shop v~1.0";
+});
+
+Route::prefix('customer')->namespace('Customer')->group(function(){
+    Route::post('register','CustomerController@register');
+    Route::post('login',"CustomerController@login");
+    Route::post('refresh','CustomerController@refresh');
+    Route::get('me','CustomerController@me');
+
 });
 
