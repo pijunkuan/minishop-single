@@ -47,7 +47,16 @@ Route::middleware('auth:customers')->group(function(){
         Route::put('','CartController@update');
         Route::delete('{variant_id}','CartController@destroy');
     });
+});
 
+Route::middleware('auth:admins')->prefix("admin")->group(function(){
+    Route::prefix('product')->namespace('Product')->group(function(){
+       Route::post('',"ProductController@store");
+       Route::put('{product}',"ProductController@update");
+       Route::delete('{product}',"ProductController@destroy");
+       Route::get('{product}',"ProductController@admin_show");
+       Route::get('',"ProductController@admin_index");
+    });
 });
 
 

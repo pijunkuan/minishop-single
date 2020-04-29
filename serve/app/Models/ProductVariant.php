@@ -8,6 +8,7 @@ class ProductVariant extends Model
 {
     public $table="product_variants";
     protected $guarded = [];
+    public $timestamps = false;
 
     public function product()
     {

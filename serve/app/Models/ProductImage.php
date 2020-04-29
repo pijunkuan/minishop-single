@@ -10,4 +10,9 @@ class ProductImage extends Model
     protected $guarded = [];
     public $timestamps = false;
 
+    public function image()
+    {
+        return $this->belongsTo(Image::class,"image_id");
+    }
+
 }
