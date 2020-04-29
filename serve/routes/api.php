@@ -46,6 +46,8 @@ Route::middleware('auth:customers')->group(function () {
         Route::put('', 'CartController@update');
         Route::delete('{variant_id}', 'CartController@destroy');
     });
+    Route::apiResource('address','Address\AddressController')->except(['show']);
+
 });
 
 Route::middleware('auth:admins')->prefix("admin")->group(function () {

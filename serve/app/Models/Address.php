@@ -8,6 +8,9 @@ class Address extends Model
 {
     public $table="addresses";
     protected $guarded = [];
+    protected $casts = [
+        "default"=>"boolean"
+    ];
 
     public function customer()
     {
