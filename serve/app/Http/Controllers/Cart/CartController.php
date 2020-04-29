@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Cart;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cart\AddCartRequest;
+use App\Http\Resources\Cart\CartItemResource;
+use App\Models\CartItem;
 use App\Models\ProductVariant;
 use Illuminate\Http\Request;
 
@@ -11,14 +13,14 @@ class CartController extends Controller
 {
     public function index(Request $request)
     {
-        return $this->jsonSuccessResponse();
+        $cartItems = auth('customers')->user()->cartItems;
+        return $this->jsonSuccessResponse(CartItemResource::collection($cartItems));
     }
 
     public function store(AddCartRequest $request)
     {
         $quantity = $request->get('quantity');
         $customer = auth('customers')->user();
-
         if($cart_item = $customer->cartItems()->where('variant_id',$request->get('variant_id'))->first()){
            $cart_item->update([
                "quantity"=>$cart_item->quantity + $quantity

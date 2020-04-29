@@ -15,8 +15,13 @@ class AdminProductDetailResource extends JsonResource
     public function toArray($request)
     {
         $images = $this->product_images()->orderBy('sort','asc')->get();
+        $images_array = array();
         foreach($images as $key => $image){
-            $images[$key]['url'] = $image->image->url;
+            $images_array[] = [
+              "image_id"=>$image['image_id'],
+              "url"=>$image->image->url,
+              "sort"=>$image['sort']
+            ];
         }
        return [
            "product"=>[
@@ -25,7 +30,7 @@ class AdminProductDetailResource extends JsonResource
                "product_unit"=>$this->product_unit,
                "on_sale"=>$this->on_sale,
            ],
-           "images"=>$images,
+           "images"=>$images_array,
            "variants"=>$this->variants,
            "content"=>$this->content->content,
            "created_at"=>$this->created_at->toDateTimeString(),

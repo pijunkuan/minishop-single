@@ -21,6 +21,7 @@ class AdminProductResource extends JsonResource
         }
         $price = $this->variants()->orderBy("price", "asc")->first()->value('price');
         return [
+            "id"=>$this->id,
             "product_title" => $this->product_title,
             "img" => $img_url,
             "price" => $price,
