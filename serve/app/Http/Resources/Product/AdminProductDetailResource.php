@@ -16,7 +16,7 @@ class AdminProductDetailResource extends JsonResource
     {
         $images = $this->product_images()->orderBy('sort','asc')->get();
         foreach($images as $key => $image){
-            $images[$key]['img_link'] = $image->image->img_link;
+            $images[$key]['url'] = $image->image->url;
         }
        return [
            "product"=>[

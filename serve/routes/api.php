@@ -57,6 +57,11 @@ Route::middleware('auth:admins')->prefix("admin")->group(function(){
        Route::get('{product}',"ProductController@admin_show");
        Route::get('',"ProductController@admin_index");
     });
+    Route::prefix('image')->namespace('Image')->group(function(){
+       Route::post('',"ImageController@store");
+       Route::delete('{image}',"ImageController@destroy");
+       Route::get('','ImageController@index');
+    });
 });
 
 

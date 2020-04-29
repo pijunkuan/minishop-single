@@ -17,7 +17,7 @@ class AdminProductResource extends JsonResource
         $image = $this->product_images()->orderBy('sort', 'asc')->first();
         $img_url = null;
         if ($image) {
-            $img_url = $image->image->img_link;
+            $img_url = $image->image->url;
         }
         $price = $this->variants()->orderBy("price", "asc")->first()->value('price');
         return [
