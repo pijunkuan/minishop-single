@@ -8,6 +8,7 @@ class OrderItem extends Model
 {
     public $table = "order_items";
     protected $guarded = [];
+    public $timestamps=false;
 
     public function order()
     {

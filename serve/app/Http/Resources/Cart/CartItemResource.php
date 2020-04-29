@@ -16,6 +16,10 @@ class CartItemResource extends JsonResource
     public function toArray($request)
     {
         $ori_variant = ProductVariant::find($this->variant_id);
+        $img_url = null;
+        if($ori_variant){
+            if($img = $ori_variant->product->product_images()->orderBy('sort','asc')->first()) $img_url = $img->image->url;
+        }
         if (!$ori_variant) {
             $variant = [
                 "id" => $this->id,
@@ -25,7 +29,8 @@ class CartItemResource extends JsonResource
                 "price"=>$this->price,
                 "quantity"=>$this->quantity,
                 "visibility"=>false,
-                "reason"=>"商品不存在"
+                "reason"=>"商品不存在",
+                "img_url"=>$img_url,
             ];
         }elseif(!$ori_variant->product->on_sale){
             $variant = [
@@ -36,7 +41,9 @@ class CartItemResource extends JsonResource
                 "price"=>$this->price,
                 "quantity"=>$this->quantity,
                 "visibility"=>false,
-                "reason"=>"商品已下架"
+                "reason"=>"商品已下架",
+                "img_url"=>$img_url,
+
             ];
         }else{
             if($ori_variant->quantity < $this->quantity){
@@ -48,7 +55,8 @@ class CartItemResource extends JsonResource
                     "price"=>$ori_variant->price,
                     "quantity"=>$this->quantity,
                     "visibility"=>false,
-                    "reason"=>"库存不足"
+                    "reason"=>"库存不足",
+                    "img_url"=>$img_url,
                 ];
             }else{
                 $variant = [
@@ -59,7 +67,8 @@ class CartItemResource extends JsonResource
                     "price"=>$ori_variant->price,
                     "quantity"=>$this->quantity,
                     "visibility"=>true,
-                    "reason"=>null
+                    "reason"=>null,
+                    "img_url"=>$img_url,
                 ];
             }
 

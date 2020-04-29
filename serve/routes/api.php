@@ -34,6 +34,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
     Route::get('', "AdminController@me");
     Route::put('', "AdminController@update");
 });
+Route::apiResource('product','Product\ProductController')->only(['index','show']);
 
 Route::middleware('auth:customers')->group(function () {
     Route::prefix('wallet')->namespace('Wallet')->group(function () {
@@ -47,7 +48,7 @@ Route::middleware('auth:customers')->group(function () {
         Route::delete('{variant_id}', 'CartController@destroy');
     });
     Route::apiResource('address','Address\AddressController')->except(['show']);
-
+    Route::apiResource('order',"Order\OrderController")->except(['destroy']);
 });
 
 Route::middleware('auth:admins')->prefix("admin")->group(function () {
