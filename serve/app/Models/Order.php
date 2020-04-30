@@ -13,19 +13,22 @@ class Order extends Model
     const ORDER_STATUS_SUCCESS = "success";
     const ORDER_STATUS_CLOSED = "closed";
     const ORDER_STATUS_CANCEL = "cancel";
-    const ORDER_STATUS_REFUNDING = "refunding";
-    const ORDER_STATUS_REFUNDED = "refunded";
+    const REFUND_STATUS_REFUNDING = "refunding";
+    const REFUND_STATUS_REFUNDED = "refunded";
 
     const orderStatusMap = [
-        self::ORDER_STATUS_PENDING=>"待付款",
-        self::ORDER_STATUS_PROCESSING=>"已付款",
-        self::ORDER_STATUS_PARTIAL=>"部分发货",
-        self::ORDER_STATUS_SENT=>"全部发货",
-        self::ORDER_STATUS_SUCCESS=>"已成功",
-        self::ORDER_STATUS_CLOSED=>"已关闭",
-        self::ORDER_STATUS_REFUNDING=>"退款中",
-        self::ORDER_STATUS_REFUNDED=>"已退款",
-        self::ORDER_STATUS_CANCEL=>"已取消",
+        self::ORDER_STATUS_PENDING => "待付款",
+        self::ORDER_STATUS_PROCESSING => "已付款",
+        self::ORDER_STATUS_PARTIAL => "部分发货",
+        self::ORDER_STATUS_SENT => "全部发货",
+        self::ORDER_STATUS_SUCCESS => "已成功",
+        self::ORDER_STATUS_CLOSED => "已关闭",
+        self::ORDER_STATUS_CANCEL => "已取消",
+    ];
+
+    const refundStatusMap = [
+        self::REFUND_STATUS_REFUNDING => "退款中",
+        self::REFUND_STATUS_REFUNDED => "已退款",
     ];
 
     public $table = "orders";
@@ -50,22 +53,27 @@ class Order extends Model
 
     public function customer()
     {
-        return $this->belongsTo(Customer::class,"customer_id");
+        return $this->belongsTo(Customer::class, "customer_id");
     }
 
     public function address()
     {
-        return $this->hasOne(OrderAddress::class,"order_id");
+        return $this->hasOne(OrderAddress::class, "order_id");
     }
 
     public function items()
     {
-        return $this->hasMany(OrderItem::class,"order_id");
+        return $this->hasMany(OrderItem::class, "order_id");
     }
 
     public function payments()
     {
-        return $this->hasMay(OrderPayment::class,"order_id");
+        return $this->hasMany(OrderPayment::class, "order_id");
+    }
+
+    public function refunds()
+    {
+        return $this->hasMany(OrderRefund::class, "order_id");
     }
 
     public static function findAvailableNo()
@@ -74,14 +82,12 @@ class Order extends Model
         $prefix = date('YmdHis');
         for ($i = 0; $i < 10; $i++) {
             // 随机生成 6 位的数字
-            $no = $prefix.str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+            $no = $prefix . str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
             // 判断是否已经存在
             if (!static::query()->where('no', $no)->exists()) {
                 return $no;
             }
         }
-        Log::warning('find order no failed');
-
         return false;
     }
 }

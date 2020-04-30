@@ -21,6 +21,12 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\Order\OrderCancelEvent'=>[
             'App\Listeners\Order\OrderCancelConfirmation'
         ],
+        'App\Events\Pay\PayCreateEvent'=>[
+            'App\Listeners\Pay\PayCreateConfirmation'
+        ],
+        'App\Events\Pay\PaySuccessEvent'=>[
+            'App\Listeners\Pay\PaySuccessConfirmation'
+        ],
 
 
     ];

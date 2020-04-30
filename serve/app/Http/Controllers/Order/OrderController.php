@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Order;
 
 use App\Events\Order\OrderCancelEvent;
+use App\Events\Pay\PayCreateEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Order\OrderStoreRequest;
+use App\Http\Requests\Pay\PayCreateRequest;
 use App\Http\Resources\Order\OrderCollection;
 use App\Http\Resources\Order\OrderDetail;
+use App\Models\Order;
 use App\Services\Order\OrderStore;
 use Illuminate\Http\Request;
 
@@ -51,6 +54,21 @@ class OrderController extends Controller
             return $this->jsonSuccessResponse();
         }else{
             return $this->jsonErrorResponse(404,"状态必须填写");
+        }
+    }
+
+    public function pay_create($order,$payment)
+    {
+        $order = auth('customers')->user()->orders()->where('no',$order)->first();
+        if(!$order) return $this->jsonErrorResponse(404,"未找到此订单");
+        if($order->status !== Order::ORDER_STATUS_PENDING) return $this->jsonErrorResponse(404,"该状态无法支付");
+        switch($payment){
+            case "wallet":
+                event(new PayCreateEvent($order,"wallet"));
+                break;
+            default:
+                return $this->jsonErrorResponse(404,"无此状态码");
+                break;
         }
     }
 }

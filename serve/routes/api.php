@@ -36,6 +36,10 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
 });
 Route::apiResource('product','Product\ProductController')->only(['index','show']);
 
+Route::prefix('pay/{no}')->namespace('Pay')->group(function(){
+    Route::get('wallet',"PayController@wallet")->middleware('auth:customers');
+});
+
 Route::middleware('auth:customers')->group(function () {
     Route::prefix('wallet')->namespace('Wallet')->group(function () {
         Route::get('', 'WalletController@index');
@@ -48,6 +52,7 @@ Route::middleware('auth:customers')->group(function () {
         Route::delete('{variant_id}', 'CartController@destroy');
     });
     Route::apiResource('address','Address\AddressController')->except(['show']);
+    Route::post('order/{order}/pay/{payment}',"Order\OrderController@pay_create")->name('order.pay');
     Route::apiResource('order',"Order\OrderController")->except(['destroy']);
 });
 
