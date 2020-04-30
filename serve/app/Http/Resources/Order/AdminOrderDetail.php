@@ -31,6 +31,7 @@ class AdminOrderDetail extends JsonResource
                 "img_url" => $img_url,
                 "product_unit" => $value['product_unit'],
                 "quantity" => $value['quantity'],
+                "ship_quantity"=>$this->ship_items()->where('variant_id',$value['variant_id'])->sum('quantity')*1.0,
                 "total" => $value['quantity']*$value['price']
             ];
         }
@@ -43,11 +44,13 @@ class AdminOrderDetail extends JsonResource
 
         return [
             "customer"=>$this->customer,
+            "payment"=>$this->payments()->orderBy('created_at',"desc")->first(),
             "address"=>$address,
             "items"=>$items,
             "items_amount"=>$this->items_amount,
             "shipments_amount"=>$this->shipments_amount,
             "discounts_amount"=>$this->discounts_amount,
+            "ori_amount"=>$this->items_amount + $this->shipments_amount + $this->discounts_amount,
             "amount"=>$this->amount,
             "closed_reason"=>$this->closed_reason,
             "refund_reason"=>$this->refund_reason,
