@@ -26,6 +26,7 @@ class OrderResource extends JsonResource
             }
             $items[] = [
                 "product_title" => $value['product_title'],
+                "variant_id" => $value['variant_id'],
                 "variant_title" => $value['variant_title'],
                 "price" => $value['price'],
                 "img_url" => $img_url,

@@ -57,17 +57,16 @@ Route::middleware('auth:customers')->group(function () {
 });
 
 Route::middleware('auth:admins')->prefix("admin")->group(function () {
-    Route::prefix('product')->namespace('Product')->group(function () {
-        Route::post('', "ProductController@store");
-        Route::put('{product}', "ProductController@update");
-        Route::delete('{product}', "ProductController@destroy");
-        Route::get('{product}', "ProductController@admin_show");
-        Route::get('', "ProductController@admin_index");
+    Route::apiResource('product','Product\AdminProductController');
+    Route::apiResource('image',"Image\ImageController")->only(['store','destroy','index']);
+    Route::prefix('order')->namespace('Order')->group(function(){
+        Route::get('','AdminOrderController@index');
+        Route::put('{order}',"AdminOrderController@update");
+        Route::get('{order}',"AdminOrderController@show");
     });
-    Route::prefix('image')->namespace('Image')->group(function () {
-        Route::post('', "ImageController@store");
-        Route::delete('{image}', "ImageController@destroy");
-        Route::get('', 'ImageController@index');
+    Route::prefix('shipment/{order}')->namespace('Shipment')->group(function(){
+        Route::get('','AdminShipmentController@index');
+        Route::post('','AdminShipmentController@store');
     });
 });
 

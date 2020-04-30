@@ -25,10 +25,6 @@ class AddCartRequest extends FormRequest
                         return $fail('该商品不存在');
                     if(!$variant->product->on_sale )
                         return $fail('该商品未上架');
-//                    if($variant->quantity <= 0 )
-//                        return $fail('该商品已售空');
-//                    if ($variant->quantity < $this->get('amount'))
-//                        return $fail('该商品库存不足');
                 },
             ],
             'quantity'=>['required','integer','min:1'],
@@ -38,7 +34,7 @@ class AddCartRequest extends FormRequest
     public function attributes()
     {
         return [
-            "amount" => "商品数量"
+            "quantity" => "商品数量"
         ];
     }
 
