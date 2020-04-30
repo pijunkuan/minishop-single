@@ -8,7 +8,7 @@ class OrderPayment extends Model
 {
     const PAYMENT_STATUS_PENDING = "pending";
     const PAYMENT_STATUS_SUCCESS = "success";
-    const PAYMENT_STATUS_CLOSED = "CLOSED";
+    const PAYMENT_STATUS_CLOSED = "closed";
 
     const paymentStatusMap = [
       self::PAYMENT_STATUS_PENDING=>"待支付",
