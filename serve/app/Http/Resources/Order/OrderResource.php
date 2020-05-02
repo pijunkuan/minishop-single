@@ -42,8 +42,8 @@ class OrderResource extends JsonResource
             "mobile" => $address->mobile,
             "address" => "{$address->province} {$address->city} {$address->district} {$address->detail}",
             "zip"=>$address->zip,
-            "status"=>$this->status,
-            "status_value"=>Order::orderStatusMap[$this->status],
+            "status"=>$this->refund_status?$this->refund_status:$this->status,
+            "status_value"=>$this->refund_status?Order::refundStatusMap[$this->refund_status]:Order::orderStatusMap[$this->status],
             "amount"=>$this->amount,
             "items" => $items
         ];
