@@ -15,8 +15,8 @@ class AddressController extends Controller
     public function index(Request $request)
     {
         $addresses = auth('customers')->user()->addresses();
-        if($request->get('name')) $addresses = $addresses->where('name','like',"%{$request->get('name')}%");
-        $addresses = $addresses->paginate($request->get('pageSize'));
+        if ($request->get('name')) $addresses = $addresses->where('name', 'like', "%{$request->get('name')}%");
+        $addresses = $addresses->orderBy('default', 'desc')->paginate($request->get('pageSize'));
         return $this->jsonSuccessResponse(new AddressCollection($addresses));
     }
 
@@ -35,22 +35,22 @@ class AddressController extends Controller
                 "default" => $request->get('default') ? true : false
             ];
             $customer = auth('customers')->user();
-            if($address['default'])
-                $customer->addresses()->update(['default'=>false]);
-            if($customer->addresses()->count() == 0)
+            if ($address['default'])
+                $customer->addresses()->update(['default' => false]);
+            if ($customer->addresses()->count() == 0)
                 $address['default'] = true;
             $customer->addresses()->create($address);
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
-            return $this->jsonErrorResponse(401,$exception->getMessage());
+            return $this->jsonErrorResponse(401, $exception->getMessage());
         }
-        return $this->jsonSuccessResponse(null,"地址创建成功");
+        return $this->jsonSuccessResponse(null, "地址创建成功");
     }
 
     public function update($address, AddressStoreRequest $request)
     {
-        if($address = auth('customers')->user()->addresses()->find($address)){
+        if ($address = auth('customers')->user()->addresses()->find($address)) {
             DB::beginTransaction();
             try {
                 $temp = [
@@ -63,35 +63,36 @@ class AddressController extends Controller
                     "zip" => $request->get("zip"),
                     "default" => $request->get('default') ? true : false
                 ];
-                if ($temp['default']){
-                    auth('customers')->user()->addresses()->update(['default'=>false]);
-                }elseif(auth('customers')->user()->addresses()->count() == 1){
+                if ($temp['default']) {
+                    auth('customers')->user()->addresses()->update(['default' => false]);
+                } elseif (auth('customers')->user()->addresses()->count() == 1) {
                     $temp['default'] = true;
-                }elseif($address->default){
+                } elseif ($address->default) {
                     $temp['default'] = true;
                 }
                 $address->update($temp);
                 DB::commit();
             } catch (\Exception $exception) {
                 DB::rollBack();
-                return $this->jsonErrorResponse(401,$exception->getMessage());
+                return $this->jsonErrorResponse(401, $exception->getMessage());
             }
 
             return $this->jsonSuccessResponse();
-        }else{
-            return $this->jsonErrorResponse(401,"没有此记录");
+        } else {
+            return $this->jsonErrorResponse(401, "没有此记录");
         }
     }
 
     public function destroy($address)
     {
-        if($address = auth('customers')->user()->addresses()->find($address)){
+        if ($address = auth('customers')->user()->addresses()->find($address)) {
             $address->delete();
-            if(auth('customers')->user()->addresses()->count()==1)
-                auth('customers')->user()->addresses()->first()->update(['default'=>true]);
+            if (auth('customers')->user()->addresses()->count() > 0)
+                if (auth('customers')->user()->addresses()->where('default', 1)->count() == 0)
+                    auth('customers')->user()->addresses()->first()->update(['default' => true]);
             return $this->jsonSuccessResponse();
-        }else{
-            return $this->jsonErrorResponse(401,"没有此记录");
+        } else {
+            return $this->jsonErrorResponse(401, "没有此记录");
         }
     }
 }
