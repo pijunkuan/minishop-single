@@ -18,7 +18,7 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {
-            throw (new HttpResponseException($this->jsonErrorResponse(401,"error")));
+            throw (new HttpResponseException($this->jsonErrorResponse(401,"认证失败/过期")));
 //            return route('login');
         }
     }
