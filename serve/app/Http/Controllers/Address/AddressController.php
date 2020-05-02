@@ -15,6 +15,7 @@ class AddressController extends Controller
     public function index(Request $request)
     {
         $addresses = auth('customers')->user()->addresses();
+        if($request->get('name')) $addresses = $addresses->where('name','like',"%{$request->get('name')}%");
         $addresses = $addresses->paginate($request->get('pageSize'));
         return $this->jsonSuccessResponse(new AddressCollection($addresses));
     }
