@@ -34,7 +34,7 @@ class CustomerController extends Controller
     {
         $credentials = \request(['mobile','password']);
         if (!$token = auth('customers')->attempt($credentials)) {
-            return $this->jsonErrorResponse(401,"用户认证失败");
+            return $this->jsonErrorResponse(401,"用户认证失败（如：密码错误）");
         }
         return $this->jsonSuccessResponse($this->respondWithToken($token));
     }
@@ -71,9 +71,8 @@ class CustomerController extends Controller
     {
         return [
             'access_token' => $token,
-            'Authorization' => "Bearer ".$token,
             'token_type' => 'Bearer',
-            'expires_in' => auth('customers')->factory()->getTTL() * 60
+            'expires_in' => auth('customers')->factory()->getTTL() * 60,
         ];
     }
 }
