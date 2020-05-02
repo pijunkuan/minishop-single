@@ -13,6 +13,7 @@ use App\Http\Resources\Order\OrderCollection;
 use App\Http\Resources\Order\OrderDetail;
 use App\Http\Resources\Order\OrderResource;
 use App\Models\Order;
+use App\Models\OrderAddress;
 use App\Models\OrderPayment;
 use App\Services\Order\OrderStore;
 use Illuminate\Http\Request;
@@ -22,6 +23,34 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $orders = auth('customers')->user()->orders();
+        if($request->get('name')){
+            $orders_id = OrderAddress::where('name','like',"%{$request->get('name')}%")->pluck('order_id');
+            $orders = $orders->whereIn('id',$orders_id);
+        }
+        if($request->get('no')){
+            $orders = $orders->where('no','like',"%{$request->get('no')}%");
+        }
+        if($status = $request->get('status')){
+            switch($status){
+                //待付款
+                case Order::ORDER_STATUS_PENDING:
+                    $orders = $orders->where('status',Order::ORDER_STATUS_PENDING);
+                    break;
+                //待发货
+                case Order::ORDER_STATUS_PROCESSING:
+                    $orders = $orders->where('status',Order::ORDER_STATUS_PROCESSING)->where('refund_status',null);
+                    break;
+                //已发货
+                case Order::ORDER_STATUS_PARTIAL:
+                case Order::ORDER_STATUS_SENT:
+                    $orders = $orders->whereIn('status',[Order::ORDER_STATUS_PARTIAL,Order::ORDER_STATUS_SENT])->where('refund_status',null);
+                    break;
+                //退款中
+                case Order::REFUND_STATUS_REFUNDING:
+                    $orders = $orders->where('refund_status',Order::REFUND_STATUS_REFUNDING);
+                    break;
+            }
+        }
         $orders = $orders->paginate($request->get('pageSize'));
         return $this->jsonSuccessResponse(new OrderCollection($orders));
     }
