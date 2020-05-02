@@ -32,6 +32,7 @@ class ProductRequest extends FormRequest
             "variants.*.price"=>"required|numeric",
             "variants.*.buy_price"=>"nullable|numeric",
             "variants.*.quantity"=>"required|numeric",
+            "categories"=>"nullable|array",
         ];
     }
 
@@ -53,6 +54,7 @@ class ProductRequest extends FormRequest
             "variants.*.price"=>"商品规格售价",
             "variants.*.buy_price"=>"商品规格采购价",
             "variants.*.quantity"=>"商品规格库存",
+            "categories"=>"商品分类",
         ];
     }
 }

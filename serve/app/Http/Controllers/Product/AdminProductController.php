@@ -38,6 +38,8 @@ class AdminProductController extends Controller
             if (isset($product_spu['product_unit'])) $product['product_unit'] = $product_spu['product_unit'];
             if (isset($product_spu['product_des'])) $product['product_des'] = $product_spu['product_des'];
             $product->save();
+            if ($categories = $request->get('categories') ?: []) $product->categories()->sync($categories);
+
             $product->content()->create(['content' => $request->get('content')]);
             $images = $request->get('images');
             if (is_array($images) && count($images)) {
@@ -89,6 +91,9 @@ class AdminProductController extends Controller
                     ]);
                 }
             }
+
+            $product->categories()->sync($request->get('categories') ?: []);
+
 
             $variants = $request->get('variants');
             $sku_ids = array_filter(collect($variants)->pluck('id')->toArray());
