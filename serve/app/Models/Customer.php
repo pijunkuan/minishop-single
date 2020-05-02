@@ -55,7 +55,7 @@ class Customer extends Authenticatable implements JWTSubject
     public static function findAvailableUsername()
     {
         // 生成Username
-        $prefix = "m_".date('YmdHis');
+        $prefix = "m_".date('ymd');
         for ($i = 0; $i < 10; $i++) {
             // 随机生成 6 位的数字
             $username = $prefix.str_pad(random_int(0, 999), 3, '0', STR_PAD_LEFT);
