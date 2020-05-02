@@ -35,6 +35,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
     Route::put('', "AdminController@update");
 });
 Route::apiResource('product','Product\ProductController')->only(['index','show']);
+Route::get('category','Category\CategoryController@index');
 
 Route::prefix('pay/{no}')->namespace('Pay')->group(function(){
     Route::get('wallet',"PayController@wallet")->middleware('auth:customers');
@@ -68,6 +69,7 @@ Route::middleware('auth:admins')->prefix("admin")->group(function () {
         Route::get('','AdminShipmentController@index');
         Route::post('','AdminShipmentController@store');
     });
+    Route::apiResource('category','Category\AdminCategoryController')->except(['show']);
 });
 
 
