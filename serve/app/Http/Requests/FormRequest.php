@@ -26,7 +26,7 @@ class FormRequest extends BaseFormRequest
     {
         throw (new HttpResponseException(response()->json([
             'code'=>422,
-            "msg"=>$validator->errors()->first(),
+            "message"=>$validator->errors()->first(),
             "data"=>null,
         ],422)));
     }
