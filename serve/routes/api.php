@@ -53,6 +53,7 @@ Route::middleware('auth:customers')->group(function () {
         Route::delete('{variant_id}', 'CartController@destroy');
     });
     Route::apiResource('address','Address\AddressController')->except(['show']);
+    Route::post('order/calc','Order\OrderController@calc');
     Route::post('order/{order}/pay/{payment}',"Order\OrderController@pay_create")->name('order.pay');
     Route::apiResource('order',"Order\OrderController")->except(['destroy']);
 });

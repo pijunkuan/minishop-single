@@ -7,6 +7,7 @@ use App\Events\Order\OrderRefundEvent;
 use App\Events\Order\OrderSuccessEvent;
 use App\Events\Pay\PayCreateEvent;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Order\OrderCalcRequest;
 use App\Http\Requests\Order\OrderStoreRequest;
 use App\Http\Requests\Pay\PayCreateRequest;
 use App\Http\Resources\Order\OrderCollection;
@@ -94,6 +95,12 @@ class OrderController extends Controller
         }else{
             return $this->jsonErrorResponse(404,"状态必须填写");
         }
+    }
+
+    public function calc(OrderCalcRequest $request)
+    {
+        $order = OrderStore::order_calc($request->get('address'),$request->get('items'));
+        return $this->jsonSuccessResponse($order);
     }
 
     public function pay_create($order,$payment)
