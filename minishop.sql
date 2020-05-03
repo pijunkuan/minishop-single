@@ -1,5 +1,7 @@
 /*
- 创建人：Jacky Pi
+ Jacky Pi
+
+ Date: 04/05/2020 02:27:42
 */
 
 SET NAMES utf8mb4;
@@ -25,7 +27,7 @@ CREATE TABLE `addresses`  (
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `customer_id`(`customer_id`) USING BTREE,
   CONSTRAINT `addresses_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for admins
@@ -59,6 +61,17 @@ CREATE TABLE `cart_items`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Table structure for categories
+-- ----------------------------
+DROP TABLE IF EXISTS `categories`;
+CREATE TABLE `categories`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `category_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `visibility` tinyint(1) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
 -- Table structure for customers
 -- ----------------------------
 DROP TABLE IF EXISTS `customers`;
@@ -72,7 +85,7 @@ CREATE TABLE `customers`  (
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `mobile`(`mobile`, `username`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for images
@@ -120,6 +133,7 @@ CREATE TABLE `order_items`  (
   `variant_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
   `price` decimal(10, 2) NULL DEFAULT NULL,
   `quantity` int(10) NULL DEFAULT NULL,
+  `weight` decimal(10, 2) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `order_id`(`order_id`) USING BTREE,
   CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
@@ -174,6 +188,7 @@ CREATE TABLE `order_shipment_items`  (
   `product_unit` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
   `variant_title` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL,
   `quantity` int(10) NULL DEFAULT NULL,
+  `weight` decimal(10, 2) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `shipment_id`(`shipment_id`) USING BTREE,
   CONSTRAINT `order_shipment_items_ibfk_1` FOREIGN KEY (`shipment_id`) REFERENCES `order_shipments` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
@@ -238,6 +253,19 @@ CREATE TABLE `orders`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Table structure for product_categories
+-- ----------------------------
+DROP TABLE IF EXISTS `product_categories`;
+CREATE TABLE `product_categories`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `product_id` bigint(20) NULL DEFAULT NULL,
+  `category_id` bigint(20) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `product_id`(`product_id`) USING BTREE,
+  CONSTRAINT `product_categories_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
 -- Table structure for product_contents
 -- ----------------------------
 DROP TABLE IF EXISTS `product_contents`;
@@ -277,10 +305,11 @@ CREATE TABLE `product_variants`  (
   `ori_price` decimal(10, 2) NULL DEFAULT NULL,
   `price` decimal(10, 2) NOT NULL,
   `buy_price` decimal(10, 2) NULL DEFAULT NULL,
+  `weight` decimal(10, 2) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `product_id`(`product_id`) USING BTREE,
   CONSTRAINT `product_variants_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for products
@@ -296,6 +325,23 @@ CREATE TABLE `products`  (
   `updated_at` timestamp(0) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for shipments
+-- ----------------------------
+DROP TABLE IF EXISTS `shipments`;
+CREATE TABLE `shipments`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `shipment_title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `visibility` tinyint(1) NULL DEFAULT NULL,
+  `need_cost` tinyint(1) NULL DEFAULT NULL,
+  `cost_type` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `price_1` decimal(10, 2) NULL DEFAULT NULL,
+  `value_1` decimal(10, 2) NULL DEFAULT NULL,
+  `price_2` decimal(10, 2) NULL DEFAULT NULL,
+  `value_2` decimal(10, 2) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for wallets
