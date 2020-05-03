@@ -20,6 +20,7 @@ class OrderStore
         }
         $order = self::order_init();
         $items = self::items($items);
+
         $order['address'] = $address;
         $order['items'] = $items;
         $order['items_amount'] = self::items_calc($items);
@@ -86,6 +87,7 @@ class OrderStore
                 "variant_title" => $variant['variant_title'],
                 "price" => $variant['price'],
                 "quantity" => $item['quantity'],
+                "weight" => $variant['weight'],
             ];
         }
         return $variants;
