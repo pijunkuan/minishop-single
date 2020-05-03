@@ -45,6 +45,7 @@ class OrderStore
                     "variant_title" => $variant['variant_title'],
                     "price" => $variant['price'],
                     "quantity" => $item['quantity'],
+                    "weight" => $variant['weight'],
                 ]);
                 if ($variant->decreaseStock($item['quantity']) <= 0) {
                     throw (new HttpResponseException(response()->json([

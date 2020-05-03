@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Shipment;
+namespace App\Http\Requests\Order;
 
 
 use App\Http\Requests\FormRequest;
 use App\Models\Order;
-use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ShipmentStoreRequest extends FormRequest
 {
