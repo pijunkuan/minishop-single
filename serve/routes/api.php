@@ -62,14 +62,13 @@ Route::middleware('auth:admins')->prefix("admin")->group(function () {
     Route::apiResource('image',"Image\ImageController")->only(['store','destroy','index']);
     Route::prefix('order')->namespace('Order')->group(function(){
         Route::get('','AdminOrderController@index');
+        Route::get('{order}/shipment','AdminOrderShipmentController@index');
+        Route::post('{order}/shipment','AdminOrderShipmentController@store');
         Route::put('{order}',"AdminOrderController@update");
         Route::get('{order}',"AdminOrderController@show");
     });
-    Route::prefix('shipment/{order}')->namespace('Shipment')->group(function(){
-        Route::get('','AdminShipmentController@index');
-        Route::post('','AdminShipmentController@store');
-    });
     Route::apiResource('category','Category\AdminCategoryController')->except(['show']);
+    Route::apiResource('shipment','Shipment\ShipmentController');
 });
 
 
