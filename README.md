@@ -5,7 +5,7 @@
 
 > 欢迎各位大牛多多提意见，也欢迎各位有兴趣的朋友一起维护，欢迎加QQ群：1025097836 互相交流探讨
 
-###已完善的功能:
+### 已完善的功能:
 1. 前台API功能
 1.1 用户
 	* 登录
@@ -44,7 +44,7 @@
 更多功能参考API说明
 
 
-####API文档地址：https://documenter.getpostman.com/view/1974650/SzfDwjoq
+#### API文档地址：https://documenter.getpostman.com/view/1974650/SzfDwjoq
 
 >（国内）gitee地址：https://gitee.com/jackypi/minishop-serve
 >（国外）github地址：https://github.com/pijunkuan/minishop-serve
@@ -55,12 +55,12 @@
 ### 管理员（中台）Vue页面。
 >（正在搭建中。。。）
 
-###已部署的系统方案
+### 已部署的系统方案
 * 商超H5商城
 * 外卖H5
 * 品牌独立H5商城
 
-###计划部署的系统方案
+### 计划部署的系统方案
 * 点餐排队系统
 * 超市收银+线上H5
 
