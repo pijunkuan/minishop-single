@@ -68,7 +68,7 @@ Route::middleware('auth:admins')->prefix("admin")->group(function () {
         Route::get('{order}',"AdminOrderController@show");
     });
     Route::apiResource('category','Category\AdminCategoryController')->except(['show']);
-    Route::apiResource('shipment','Shipment\ShipmentController');
+    Route::apiResource('shipment','Shipment\AdminShipmentController');
 });
 
 
