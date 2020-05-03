@@ -59,6 +59,7 @@ class AdminProductController extends Controller
                     "variant_code" => isset($variant['variant_code']) ? $variant['variant_code'] : null,
                     "ori_price" => isset($variant['ori_price']) ? $variant['ori_price'] : null,
                     "buy_price" => isset($variant['buy_price']) ? $variant['buy_price'] : null,
+                    "weight" => isset($variant['weight']) ? $variant['weight'] : null,
                 ]);
             }
             DB::commit();
@@ -91,13 +92,10 @@ class AdminProductController extends Controller
                     ]);
                 }
             }
-
             $product->categories()->sync($request->get('categories') ?: []);
-
-
             $variants = $request->get('variants');
             $sku_ids = array_filter(collect($variants)->pluck('id')->toArray());
-            if (count($sku_ids)) $product->variants()->whereNotIn($sku_ids)->delete();
+            if (count($sku_ids)) $product->variants()->whereNotIn("variant_id",$sku_ids)->delete();
             else $product->variants()->delete();
             foreach ($variants as $variant) {
                 $temp = [
@@ -107,6 +105,7 @@ class AdminProductController extends Controller
                     "variant_code" => isset($variant['variant_code']) ? $variant['variant_code'] : null,
                     "ori_price" => isset($variant['ori_price']) ? $variant['ori_price'] : null,
                     "buy_price" => isset($variant['buy_price']) ? $variant['buy_price'] : null,
+                    "weight" => isset($variant['weight']) ? $variant['weight'] : null,
                 ];
                 if (isset($variant['id']) && !is_null($variant['id'])) {
                     if ($product_variant = $product->variants()->find($variant['id'])) {
@@ -117,7 +116,6 @@ class AdminProductController extends Controller
                 } else {
                     $product->variants()->create($temp);
                 }
-
             }
             DB::commit();
         } catch (\Exception $exception) {

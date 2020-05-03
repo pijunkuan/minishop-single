@@ -29,10 +29,15 @@ class ProductRequest extends FormRequest
             "variants.*.variant_title"=>"required",
             "variants.*.variant_code"=>"nullable",
             "variants.*.ori_price"=>"nullable|numeric",
+            "variants.*.weight"=>"nullable|numeric",
             "variants.*.price"=>"required|numeric",
             "variants.*.buy_price"=>"nullable|numeric",
             "variants.*.quantity"=>"required|numeric",
             "categories"=>"nullable|array",
+            "categories.*"=>[
+                "nullable",
+                "exists:categories,id"
+            ]
         ];
     }
 
@@ -52,9 +57,11 @@ class ProductRequest extends FormRequest
             "variants.*.variant_code"=>"商品规格编码",
             "variants.*.ori_price"=>"商品规格原价",
             "variants.*.price"=>"商品规格售价",
+            "variants.*.weight"=>"商品重量",
             "variants.*.buy_price"=>"商品规格采购价",
             "variants.*.quantity"=>"商品规格库存",
             "categories"=>"商品分类",
+            "categories.*"=>"分类id"
         ];
     }
 }

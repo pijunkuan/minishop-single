@@ -30,6 +30,7 @@ class ProductDetail extends JsonResource
                 "quantity"=>$value['quantity'],
                 "ori_price"=>$value['ori_price'],
                 "price"=>$value['price'],
+                "weight"=>$value['weight'],
             ];
         }
         return [
