@@ -58,7 +58,7 @@
 >（国外）github地址：https://github.com/pijunkuan/minishop-serve
 
 ### 用户（前台）Vue页面：
-* 手机商城（已完成）[演示页面 传送门]("minishop.tvbeu.info")
+* 手机商城（已完成）[演示页面 传送门]("http://minishop.tvbeu.info")请用手机查看
 
 ### 管理员（中台）Vue页面。
 >（正在搭建中。。。）
