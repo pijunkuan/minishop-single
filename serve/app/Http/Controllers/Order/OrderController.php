@@ -54,7 +54,7 @@ class OrderController extends Controller
                     break;
             }
         }
-        $orders = $orders->paginate($request->get('pageSize'));
+        $orders = $orders->orderBy('created_at','desc')->paginate($request->get('pageSize'));
         return $this->jsonSuccessResponse(new OrderCollection($orders));
     }
 
