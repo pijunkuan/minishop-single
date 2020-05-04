@@ -27,7 +27,7 @@ class ProductDetail extends JsonResource
             $variants[] = [
                 "variant_title"=>$value['variant_title'],
                 "variant_code"=>$value['variant_code'],
-                "quantity"=>$value['quantity'],
+                "stock"=>$value['quantity'],
                 "ori_price"=>$value['ori_price'],
                 "price"=>$value['price'],
                 "weight"=>$value['weight'],
