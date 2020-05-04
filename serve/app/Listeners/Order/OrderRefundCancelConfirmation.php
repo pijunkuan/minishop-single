@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\DB;
+use phpDocumentor\Reflection\Types\Null_;
 
 class OrderRefundCancelConfirmation
 {
@@ -49,7 +50,7 @@ class OrderRefundCancelConfirmation
                 $refund->save();
             }
             $order->update([
-                "refund_status"=>null,
+                "refund_status"=> null
             ]);
             DB::commit();
         } catch (\Exception $exception) {
