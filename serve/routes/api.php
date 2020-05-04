@@ -72,6 +72,8 @@ Route::middleware('auth:admins')->prefix("admin")->group(function () {
     });
     Route::apiResource('category','Category\AdminCategoryController')->except(['show']);
     Route::apiResource('shipment','Shipment\AdminShipmentController');
+    Route::get('theme',"Theme\ThemeController@get");
+    Route::post('theme',"Theme\ThemeController@put");
 });
 
 
