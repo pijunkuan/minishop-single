@@ -55,7 +55,6 @@ class AdminController extends Controller
     {
         return [
             'access_token' => $token,
-            'Authorization' => "Bearer ".$token,
             'token_type' => 'Bearer',
             'expires_in' => auth('admins')->factory()->getTTL() * 60
         ];
