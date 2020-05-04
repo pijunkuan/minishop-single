@@ -49,7 +49,7 @@ class OrderRefundCancelConfirmation
                 $refund->save();
             }
             $order->update([
-                "refund_status"=>"",
+                "refund_status"=>null,
             ]);
             DB::commit();
         } catch (\Exception $exception) {

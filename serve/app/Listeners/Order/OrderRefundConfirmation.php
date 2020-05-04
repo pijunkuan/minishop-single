@@ -35,7 +35,7 @@ class OrderRefundConfirmation
                 Order::ORDER_STATUS_PENDING,
                 Order::ORDER_STATUS_CANCEL,
                 Order::ORDER_STATUS_CLOSED,
-            ]) || !is_null($order->refund_status)) {
+            ]) || !$order->refund_status) {
             throw (new HttpResponseException(response()->json([
                 'code' => 422,
                 "msg" => "该订单状态下无法申请退款",
