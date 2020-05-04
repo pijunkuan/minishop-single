@@ -47,6 +47,8 @@ Route::middleware('auth:customers')->group(function () {
         Route::get('balance', 'WalletController@balance');
     });
     Route::prefix('cart')->namespace('Cart')->group(function () {
+        Route::post('cache','CartController@cache_in');
+        Route::get('cache/{key}','CartController@cache_out');
         Route::get('', 'CartController@index');
         Route::post('', 'CartController@store');
         Route::put('', 'CartController@update');

@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Cart;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cart\AddCartRequest;
+use App\Http\Requests\Cart\CartCacheRequest;
 use App\Http\Resources\Cart\CartItemResource;
 use App\Models\CartItem;
 use App\Models\ProductVariant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 class CartController extends Controller
 {
@@ -55,5 +58,24 @@ class CartController extends Controller
     {
         auth('customers')->user()->cartItems()->where('variant_id',$variant_id)->delete();
         return $this->jsonSuccessResponse();
+    }
+
+    public function cache_in(CartCacheRequest $request)
+    {
+        $key = "cart_".time().Str::random(8);
+        $exp = now()->addMinute(30);
+        Cache::put($key,['customer_id'=>auth('customers')->user()->id,'items'=>$request->get('items')],$exp);
+        return $this->jsonSuccessResponse([
+            'key'=>$key,
+            'expired_at' =>$exp->toDateTimeString()
+        ]);
+    }
+
+    public function cache_out($key)
+    {
+        $cart = Cache::get($key);
+        if(!$cart) return $this->jsonErrorResponse(404,'该key不存在');
+        if($cart['customer_id'] !== auth('customers')->user()->id) return $this->jsonErrorResponse(401,'没有权限');
+        return $this->jsonSuccessResponse(["items"=>$cart['items']]);
     }
 }
