@@ -31,6 +31,7 @@ class OrderDetail extends JsonResource
                 "img_url" => $img_url,
                 "product_unit" => $value['product_unit'],
                 "quantity" => $value['quantity'],
+                "weight" => $value['weight'],
                 "total" => $value['quantity'] * $value['price']
             ];
         }
