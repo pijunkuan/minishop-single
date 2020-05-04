@@ -24,8 +24,8 @@ class OrderStore
         $order['address'] = $address;
         $order['items'] = $items;
         $order['items_amount'] = self::items_calc($items);
-        $order['shipment_amount'] = self::shipment_calc($items);
-        $order['amount'] = $order['items_amount'] + $order['shipment_amount'] - $order['discounts_amount'];
+        $order['shipments_amount'] = self::shipment_calc($items);
+        $order['amount'] = $order['items_amount'] + $order['shipments_amount'] - $order['discounts_amount'];
         return $order;
     }
 
