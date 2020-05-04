@@ -46,7 +46,7 @@ class OrderDetail extends JsonResource
         return [
             "address" => $address,
             "items" => $items,
-            "payments"=>OrderPaymentResource::collection($this->payments),
+            "payments"=>OrderPaymentResource::collection($this->payments()->orderBy('created_at','desc')->get()),
             "shipments"=>OrderShipmentResource::collection($this->shipments),
             "items_amount" => $this->items_amount,
             "shipments_amount" => $this->shipments_amount,
