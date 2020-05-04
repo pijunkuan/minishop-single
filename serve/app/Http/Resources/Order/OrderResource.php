@@ -46,7 +46,8 @@ class OrderResource extends JsonResource
             "status_value"=>$this->refund_status?Order::refundStatusMap[$this->refund_status]:Order::orderStatusMap[$this->status],
             "amount"=>$this->amount,
             "items" => $items,
-            "remark" => $this['remark']
+            "remark" => $this['remark'],
+            "created_at" => $this['created_at']->toDateTimeString(),
         ];
     }
 }
