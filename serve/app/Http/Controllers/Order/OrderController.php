@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Order\OrderCalcRequest;
 use App\Http\Requests\Order\OrderStoreRequest;
 use App\Http\Requests\Pay\PayCreateRequest;
+use App\Http\Resources\Order\OrderCalcResource;
 use App\Http\Resources\Order\OrderCollection;
 use App\Http\Resources\Order\OrderDetail;
 use App\Http\Resources\Order\OrderResource;
@@ -104,7 +105,7 @@ class OrderController extends Controller
     public function calc(OrderCalcRequest $request)
     {
         $order = OrderStore::order_calc($request->get('address'),$request->get('items'));
-        return $this->jsonSuccessResponse($order);
+        return $this->jsonSuccessResponse(new OrderCalcResource($order));
     }
 
     public function pay_create($order,$payment)
