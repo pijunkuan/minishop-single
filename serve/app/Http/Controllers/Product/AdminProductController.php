@@ -17,9 +17,10 @@ class AdminProductController extends Controller
 {
     public function index(Request $request)
     {
-        $product = new Product();
+        $products = new Product();
 
-        return $this->jsonSuccessResponse(new AdminProductCollection($product->paginate($request->get('pageSize'))));
+        $products = $products->orderBy('created_at','desc')->paginate($request->get('pageSize'));
+        return $this->jsonSuccessResponse(new AdminProductCollection($products));
     }
 
     public function show(Product $product)
