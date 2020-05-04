@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Order;
 
 use App\Events\Order\OrderCancelEvent;
+use App\Events\Order\OrderRefundCancelEvent;
 use App\Events\Order\OrderRefundEvent;
 use App\Events\Order\OrderSuccessEvent;
 use App\Events\Pay\PayCreateEvent;
@@ -86,6 +87,9 @@ class OrderController extends Controller
                     break;
                 case "refunding":
                     event(new OrderRefundEvent($order,$request->get('reason')));
+                    break;
+                case "refund_cancel":
+                    event(new OrderRefundCancelEvent($order));
                     break;
                 default:
                     return $this->jsonErrorResponse(404,"无此状态码");
