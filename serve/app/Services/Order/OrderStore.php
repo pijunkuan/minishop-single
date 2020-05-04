@@ -58,7 +58,7 @@ class OrderStore
 
             $order->shipment_amount = self::shipment_calc($items);
 
-            $order->amount = $order->items_amount + $order->shipment_amount - $order->discounts_amount;
+            $order->amount = $order->items_amount + $order->shipments_amount - $order->discounts_amount;
             $order->save();
             DB::commit();
         } catch (\Exception $exception) {
