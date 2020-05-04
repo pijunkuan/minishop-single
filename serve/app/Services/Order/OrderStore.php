@@ -56,7 +56,7 @@ class OrderStore
 
             $order->items_amount = self::items_calc($items);
 
-            $order->shipment_amount = self::shipment_calc($items);
+            $order->shipments_amount = self::shipment_calc($items);
 
             $order->amount = $order->items_amount + $order->shipments_amount - $order->discounts_amount;
             $order->save();
