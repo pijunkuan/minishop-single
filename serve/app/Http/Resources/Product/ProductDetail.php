@@ -25,6 +25,7 @@ class ProductDetail extends JsonResource
         }
         foreach($this->variants as $value){
             $variants[] = [
+                "id"=>$value['id'],
                 "variant_title"=>$value['variant_title'],
                 "variant_code"=>$value['variant_code'],
                 "stock"=>$value['quantity'],
