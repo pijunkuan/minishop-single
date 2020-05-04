@@ -36,6 +36,7 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
 });
 Route::apiResource('product','Product\ProductController')->only(['index','show']);
 Route::get('category','Category\CategoryController@index');
+Route::get('theme',"Theme\ThemeController@get");
 
 Route::prefix('pay/{no}')->namespace('Pay')->group(function(){
     Route::get('wallet',"PayController@wallet")->middleware('auth:customers');
