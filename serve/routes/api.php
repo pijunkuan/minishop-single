@@ -34,12 +34,12 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
     Route::get('me', "AdminController@me");
     Route::put('me', "AdminController@update");
 });
-Route::apiResource('product','Product\ProductController')->only(['index','show']);
-Route::get('category','Category\CategoryController@index');
-Route::get('theme',"Theme\ThemeController@get");
+Route::apiResource('product', 'Product\ProductController')->only(['index', 'show']);
+Route::get('category', 'Category\CategoryController@index');
+Route::get('theme', "Theme\ThemeController@get");
 
-Route::prefix('pay/{no}')->namespace('Pay')->group(function(){
-    Route::get('wallet',"PayController@wallet")->middleware('auth:customers');
+Route::prefix('pay/{no}')->namespace('Pay')->group(function () {
+    Route::get('wallet', "PayController@wallet")->middleware('auth:customers');
 });
 
 Route::middleware('auth:customers')->group(function () {
@@ -48,33 +48,43 @@ Route::middleware('auth:customers')->group(function () {
         Route::get('balance', 'WalletController@balance');
     });
     Route::prefix('cart')->namespace('Cart')->group(function () {
-        Route::post('cache','CartController@cache_in');
-        Route::get('cache/{key}','CartController@cache_out');
+        Route::post('cache', 'CartController@cache_in');
+        Route::get('cache/{key}', 'CartController@cache_out');
         Route::get('', 'CartController@index');
         Route::post('', 'CartController@store');
         Route::put('', 'CartController@update');
         Route::delete('{variant_id}', 'CartController@destroy');
     });
-    Route::apiResource('address','Address\AddressController')->except(['show']);
-    Route::post('order/calc','Order\OrderController@calc');
-    Route::post('order/{order}/pay/{payment}',"Order\OrderController@pay_create")->name('order.pay');
-    Route::apiResource('order',"Order\OrderController")->except(['destroy']);
+    Route::apiResource('address', 'Address\AddressController')->except(['show']);
+    Route::post('order/calc', 'Order\OrderController@calc');
+    Route::post('order/{order}/pay/{payment}', "Order\OrderController@pay_create")->name('order.pay');
+    Route::apiResource('order', "Order\OrderController")->except(['destroy']);
 });
 
 Route::middleware('auth:admins')->prefix("admin")->group(function () {
-    Route::apiResource('product','Product\AdminProductController');
-    Route::apiResource('image',"Image\ImageController")->only(['store','destroy','index']);
-    Route::prefix('order')->namespace('Order')->group(function(){
-        Route::get('','AdminOrderController@index');
-        Route::get('{order}/shipment','AdminOrderShipmentController@index');
-        Route::post('{order}/shipment','AdminOrderShipmentController@store');
-        Route::put('{order}',"AdminOrderController@update");
-        Route::get('{order}',"AdminOrderController@show");
+    Route::apiResource('product', 'Product\AdminProductController');
+    Route::apiResource('image', "Image\ImageController")->only(['store', 'destroy', 'index']);
+    Route::prefix('order')->namespace('Order')->group(function () {
+        Route::get('', 'AdminOrderController@index');
+        Route::get('{order}/shipment', 'AdminOrderShipmentController@index');
+        Route::post('{order}/shipment', 'AdminOrderShipmentController@store');
+        Route::put('{order}', "AdminOrderController@update");
+        Route::get('{order}', "AdminOrderController@show");
     });
-    Route::apiResource('category','Category\AdminCategoryController')->except(['show']);
-    Route::apiResource('shipment','Shipment\AdminShipmentController');
-    Route::get('theme',"Theme\ThemeController@get");
-    Route::post('theme',"Theme\ThemeController@put");
+    Route::prefix('customer')->namespace('Customer')->group(function () {
+        Route::put('{customer}', 'AdminCustomerController@update');
+        Route::get('', 'AdminCustomerController@index');
+
+    });
+    Route::prefix('wallet/{customer}')->namespace('Wallet')->group(function () {
+        Route::get('balance', 'AdminWalletController@balance');
+        Route::get('', 'AdminWalletController@index');
+        Route::post('', 'AdminWalletController@store');
+    });
+    Route::apiResource('category', 'Category\AdminCategoryController')->except(['show']);
+    Route::apiResource('shipment', 'Shipment\AdminShipmentController');
+    Route::get('theme', "Theme\ThemeController@get");
+    Route::post('theme', "Theme\ThemeController@put");
 });
 
 
