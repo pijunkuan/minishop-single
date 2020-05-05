@@ -31,8 +31,8 @@ Route::prefix('admin')->namespace('Admin')->group(function () {
     Route::post('login', "AdminController@login");
     Route::post('refresh', "AdminController@refresh");
     Route::get('logout', "AdminController@logout");
-    Route::get('', "AdminController@me");
-    Route::put('', "AdminController@update");
+    Route::get('me', "AdminController@me");
+    Route::put('me', "AdminController@update");
 });
 Route::apiResource('product','Product\ProductController')->only(['index','show']);
 Route::get('category','Category\CategoryController@index');
