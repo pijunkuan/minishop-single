@@ -10,15 +10,18 @@ use Illuminate\Queue\SerializesModels;
 class OrderCancelEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $order;
+    public $order, $reason;
+
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param Order $order
+     * @param $reason
      */
-    public function __construct(Order $order)
+    public function __construct(Order $order, $reason)
     {
         $this->order = $order;
+        $this->reason = $reason;
     }
 
 }

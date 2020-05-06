@@ -40,12 +40,12 @@ class OrderCancelConfirmation
         DB::beginTransaction();
         try{
             $order->status = Order::ORDER_STATUS_CANCEL;
-            $order->closed_reason = "用户主动取消订单";
+            $order->closed_reason = $event->reason;
             $order->closed_at = now();
             $order->save();
             foreach($order->items as $item){
                 $variant = ProductVariant::find($item['variant_id']);
-                $variant->addStock($item['quantity']);
+                if($variant) $variant->addStock($item['quantity']);
             }
             DB::commit();
         }catch(\Exception $exception){
