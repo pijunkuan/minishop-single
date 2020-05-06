@@ -19,7 +19,7 @@ class AdminProductController extends Controller
     public function index(Request $request)
     {
         $products = new Product();
-
+        if($name = $request->get('name')) $products = $products->where('product_title','like',"%{$name}%");
         $products = $products->orderBy('created_at', 'desc')->paginate($request->get('pageSize'));
         return $this->jsonSuccessResponse(new AdminProductCollection($products));
     }
