@@ -133,7 +133,7 @@ class AdminProductController extends Controller
         } catch (\Exception $exception) {
             DB::rollBack();
             Log::error($exception->getMessage());
-            return $this->jsonErrorResponse(401, "创建失败");
+            return $this->jsonErrorResponse(401, "创建失败"."，原因：".$exception->getMessage());
         }
         return $this->jsonSuccessResponse(new AdminProductDetailResource($product));
     }
