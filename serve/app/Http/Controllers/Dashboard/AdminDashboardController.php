@@ -49,6 +49,7 @@ class AdminDashboardController extends Controller
                     'yesterday_customer_count' => $yesterday_customer_count,
                     'week_customer_count' => $week_customer_count
                 ];
+                break;
             case "image":
                 $bytes = round(Image::sum('img_bytes') / 1024, 2);
                 if($bytes > 1024*1024){
