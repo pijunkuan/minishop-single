@@ -12,13 +12,13 @@ class AdminOrderDetail extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function toArray($request)
     {
         $items = array();
-        foreach($this->items as $value){
+        foreach ($this->items as $value) {
             $ori_variant = ProductVariant::find($value['variant_id']);
             $img_url = null;
             if ($ori_variant) {
@@ -32,29 +32,30 @@ class AdminOrderDetail extends JsonResource
                 "img_url" => $img_url,
                 "product_unit" => $value['product_unit'],
                 "quantity" => $value['quantity'],
-                "ship_quantity"=>$this->ship_items()->where('variant_id',$value['variant_id'])->sum('quantity')*1.0,
-                "total" => $value['quantity']*$value['price']
+                "ship_quantity" => $this->ship_items()->where('variant_id', $value['variant_id'])->sum('quantity') * 1.0,
+                "total" => $value['quantity'] * $value['price']
             ];
         }
         $address = [
             "name" => $this->address->name,
             "mobile" => $this->address->mobile,
             "address" => "{$this->address->province} {$this->address->city} {$this->address->district} {$this->address->detail}",
-            "zip"=>$this->address->zip,
+            "zip" => $this->address->zip,
         ];
 
         return [
-            "customer"=>$this->customer,
-            "payment"=>$this->payments()->orderBy('created_at',"desc")->first(),
-            "address"=>$address,
-            "items"=>$items,
-            "items_amount"=>$this->items_amount,
-            "shipments_amount"=>$this->shipments_amount,
-            "discounts_amount"=>$this->discounts_amount,
-            "ori_amount"=>$this->items_amount + $this->shipments_amount + $this->discounts_amount,
-            "amount"=>$this->amount,
-            "closed_reason"=>$this->closed_reason,
-            "remark"=>$this->remark,
+            "customer" => $this->customer,
+            "payment" => $this->payments()->orderBy('created_at', "desc")->first(),
+            "shipments" =>OrderShipmentResource::collection($this->shipments),
+            "address" => $address,
+            "items" => $items,
+            "items_amount" => $this->items_amount,
+            "shipments_amount" => $this->shipments_amount,
+            "discounts_amount" => $this->discounts_amount,
+            "ori_amount" => $this->items_amount + $this->shipments_amount + $this->discounts_amount,
+            "amount" => $this->amount,
+            "closed_reason" => $this->closed_reason,
+            "remark" => $this->remark,
             "status" => $this->status,
             "status_value" => Order::orderStatusMap[$this->status],
             "refund_status" => $this->refund_status ?: null,
@@ -66,5 +67,6 @@ class AdminOrderDetail extends JsonResource
             "created_at" => is_null($this->created_at) ? null : $this->created_at->toDateTimeString(),
             "updated_at" => is_null($this->updated_at) ? null : $this->updated_at->toDateTimeString(),
             "closed_at" => is_null($this->closed_at) ? null : $this->closed_at,
-        ];    }
+        ];
+    }
 }

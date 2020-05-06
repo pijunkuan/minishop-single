@@ -25,7 +25,7 @@ class OrderRefundRefuseConfirmation
     /**
      * Handle the event.
      *
-     * @param  OrderRefundRefuseEvent  $event
+     * @param OrderRefundRefuseEvent $event
      * @return void
      */
     public function handle(OrderRefundRefuseEvent $event)
@@ -43,14 +43,14 @@ class OrderRefundRefuseConfirmation
 
         DB::beginTransaction();
         try {
-            if($refund = $order->refunds()->where('status',OrderRefund::REFUND_STATUS_REFUNDING)->first()){
+            if ($refund = $order->refunds()->where('status', OrderRefund::REFUND_STATUS_REFUNDING)->first()) {
                 $refund->status = OrderRefund::REFUND_STATUS_REFUSE;
-                $reason = $event->reason?:"空";
+                $reason = $event->reason ?: "空";
                 $refund->reason .= "【商家拒绝理由】：{$reason}";
                 $refund->save();
             }
             $order->update([
-                "refund_status"=>"",
+                "refund_status" => null ,
             ]);
             DB::commit();
         } catch (\Exception $exception) {
