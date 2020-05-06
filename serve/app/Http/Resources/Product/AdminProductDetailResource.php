@@ -30,7 +30,7 @@ class AdminProductDetailResource extends JsonResource
                "product_unit"=>$this->product_unit,
                "on_sale"=>$this->on_sale,
            ],
-           "catetories"=>$this->categories,
+           "categories"=>$this->categories,
            "images"=>$images_array,
            "variants"=>$this->variants,
            "content"=>$this->content->content,
