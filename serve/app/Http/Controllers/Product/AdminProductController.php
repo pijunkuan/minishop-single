@@ -106,7 +106,7 @@ class AdminProductController extends Controller
             if ($request->has('variants')) {
                 $variants = $request->get('variants');
                 $sku_ids = array_filter(collect($variants)->pluck('id')->toArray());
-                if (count($sku_ids)) $product->variants()->whereNotIn("variant_id", $sku_ids)->delete();
+                if (count($sku_ids)) $product->variants()->whereNotIn("id", $sku_ids)->delete();
                 else $product->variants()->delete();
                 foreach ($variants as $variant) {
                     $temp = [
