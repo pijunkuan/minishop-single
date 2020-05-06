@@ -70,7 +70,7 @@ class AdminProductController extends Controller
             Log::error($exception->getMessage());
             return $this->jsonErrorResponse(401, "创建失败");
         }
-        return $this->jsonSuccessResponse();
+        return $this->jsonSuccessResponse(new AdminProductDetailResource($product));
     }
 
     public function update(Product $product, ProductUpdateRequest $request)
@@ -135,7 +135,7 @@ class AdminProductController extends Controller
             Log::error($exception->getMessage());
             return $this->jsonErrorResponse(401, "创建失败");
         }
-        return $this->jsonSuccessResponse();
+        return $this->jsonSuccessResponse(new AdminProductDetailResource($product));
     }
 
     public function destroy(Product $product)
