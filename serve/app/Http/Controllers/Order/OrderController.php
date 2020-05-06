@@ -81,7 +81,7 @@ class OrderController extends Controller
         if($request->has("status")){
             switch($request->get('status')){
                 case "cancel":
-                    event(new OrderCancelEvent($order));
+                    event(new OrderCancelEvent($order,"用户主动取消订单"));
                     break;
                 case "success":
                     event(new OrderSuccessEvent($order));
