@@ -25,12 +25,12 @@ class ImageController extends Controller
         $fileName = date('YmdHis').str_pad(random_int(0, 9999), 4, '0', STR_PAD_LEFT).".".$file->getClientOriginalExtension();
         $savePath = "images/".$fileName;
         Storage::put($savePath,File::get($file));
-        Image::create([
+        $img = Image::create([
             "img_file"=>$savePath,
             "img_name"=>$fileName,
             "img_bytes"=>$file->getSize()
         ]);
-        return $this->jsonSuccessResponse();
+        return $this->jsonSuccessResponse($img);
     }
 
     public function destroy(Image $image)
