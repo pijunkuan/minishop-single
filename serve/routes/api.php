@@ -74,7 +74,6 @@ Route::middleware('auth:admins')->prefix("admin")->group(function () {
     Route::prefix('customer')->namespace('Customer')->group(function () {
         Route::put('{customer}', 'AdminCustomerController@update');
         Route::get('', 'AdminCustomerController@index');
-
     });
     Route::prefix('wallet/{customer}')->namespace('Wallet')->group(function () {
         Route::get('balance', 'AdminWalletController@balance');
