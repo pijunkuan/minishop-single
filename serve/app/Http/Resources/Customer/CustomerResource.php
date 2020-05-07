@@ -15,6 +15,7 @@ class CustomerResource extends JsonResource
     public function toArray($request)
     {
         return [
+            "id"=>$this['id'],
             "username"=>$this['username'],
             "mobile"=>$this['mobile'],
             "balance"=>$this->wallets()->sum('amount'),
