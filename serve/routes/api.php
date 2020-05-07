@@ -86,6 +86,9 @@ Route::middleware('auth:admins')->prefix("admin")->group(function () {
     Route::apiResource('shipment', 'Shipment\AdminShipmentController');
     Route::get('theme', "Theme\ThemeController@get");
     Route::post('theme', "Theme\ThemeController@put");
+    Route::get('template', "Template\TemplateController@get");
+    Route::post('template', "Template\TemplateController@put");
+
 });
 
 
