@@ -7,6 +7,7 @@ use App\Models\Customer;
 use App\Models\Image;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminDashboardController extends Controller
 {
@@ -21,7 +22,12 @@ class AdminDashboardController extends Controller
                     ->where('refund_status', null)->count();
                 $refunding_count = Order::where('refund_status', Order::REFUND_STATUS_REFUNDING)->count();
                 $day_new_order_count = Order::whereBetween('created_at', $day)->count();
-                $day_new_order_suc_amount = Order::whereBetween('created_at',$day)->sum('amount');
+                $day_new_order_suc_amount = Order::whereIn('status', [
+                    Order::ORDER_STATUS_PROCESSING,
+                    Order::ORDER_STATUS_PARTIAL,
+                    Order::ORDER_STATUS_SENT,
+                    Order::ORDER_STATUS_SUCCESS
+                ])->whereBetween('created_at',$day)->sum('amount');
                 $yesterday_order_count = Order::whereBetween('created_at', $yesterday)->count();
                 $yesterday_order_amount = Order::whereBetween('created_at', $yesterday)->sum('amount');
                 $yesterday_order_suc_amount = Order::whereIn('status', [
@@ -68,10 +74,55 @@ class AdminDashboardController extends Controller
                     "count" => $count
                 ];
                 break;
+            case "order_line":
+                $yesterday = Order::whereBetween('created_at',$yesterday)->whereIn('status', [
+                    Order::ORDER_STATUS_PROCESSING,
+                    Order::ORDER_STATUS_PARTIAL,
+                    Order::ORDER_STATUS_SENT,
+                    Order::ORDER_STATUS_SUCCESS
+                ])->groupBy('name')->get([
+                    DB::raw("DATE_FORMAT(created_at, '%H' ) as name"),
+                    DB::raw("SUM(amount) as value")
+                ]);
+                $today = Order::whereBetween('created_at',$day)->whereIn('status', [
+                    Order::ORDER_STATUS_PROCESSING,
+                    Order::ORDER_STATUS_PARTIAL,
+                    Order::ORDER_STATUS_SENT,
+                    Order::ORDER_STATUS_SUCCESS
+                ])->groupBy('name')->get([
+                    DB::raw("DATE_FORMAT(created_at, '%H' ) as name"),
+                    DB::raw("SUM(amount) as value")
+                ]);
+                $hour = date("G",time());
+                $today = $this->hourArrayMake($hour,$today);
+                $yesterday = $this->hourArrayMake(24,$yesterday);
+                $rs = [
+                  'today'=>$today,
+                  'yesterday'=>$yesterday,
+                ];
+                break;
             default:
                 return $this->jsonErrorResponse(404, '非法参数');
                 break;
         }
         return $this->jsonSuccessResponse($rs);
+    }
+
+    private function hourArrayMake($hour, $datas)
+    {
+        $news = array();
+        for ($i = 0;$i <= $hour;$i++){
+            $news[] = [
+                "name"=>$i,
+                "value"=>0
+            ];
+        }
+        foreach($datas as $data){
+            foreach($news as $key=>$new){
+                if($new['name'] == $data['name']*1.00)
+                    $news[$key]['value'] += $data['value'];
+            }
+        }
+        return $news;
     }
 }
