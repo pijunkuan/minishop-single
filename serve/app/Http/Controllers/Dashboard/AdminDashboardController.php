@@ -21,6 +21,7 @@ class AdminDashboardController extends Controller
                     ->where('refund_status', null)->count();
                 $refunding_count = Order::where('refund_status', Order::REFUND_STATUS_REFUNDING)->count();
                 $day_new_order_count = Order::whereBetween('created_at', $day)->count();
+                $day_new_order_suc_amount = Order::whereBetween('created_at',$day)->sum('amount');
                 $yesterday_order_count = Order::whereBetween('created_at', $yesterday)->count();
                 $yesterday_order_amount = Order::whereBetween('created_at', $yesterday)->sum('amount');
                 $yesterday_order_suc_amount = Order::whereIn('status', [
