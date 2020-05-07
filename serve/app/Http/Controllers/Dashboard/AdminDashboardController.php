@@ -35,6 +35,7 @@ class AdminDashboardController extends Controller
                     "processing_count" => $processing_count,
                     "refunding_count" => $refunding_count,
                     "day_new_order_count" => $day_new_order_count,
+                    "day_new_order_suc_amount" => $day_new_order_suc_amount,
                     "yesterday_order_count" => $yesterday_order_count,
                     "yesterday_order_amount" => $yesterday_order_amount,
                     "yesterday_order_suc_amount" => $yesterday_order_suc_amount,
