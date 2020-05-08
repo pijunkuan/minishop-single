@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Shipment\ShipmentRequest;
 use App\Http\Resources\Shipment\ShipmentResource;
 use App\Models\Shipment;
+use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -72,7 +73,7 @@ class AdminShipmentController extends Controller
         if (isset($shipment['need_cost'])) {
             if ($shipment['need_cost']) {
                 if (!in_array($request->get('cost_type'), [Shipment::SHIPMENT_COST_WEIGHT, Shipment::SHIPMENT_COST_NUMERIC])) {
-                    return $this->jsonErrorResponse(404, "计价类型不在范围内");
+                    throw new HttpResponseException($this->jsonErrorResponse(405, "计价类型不在范围内"));
                 }
                 $shipment['cost_type'] = $request->get('cost_type');
                 $shipment['price_1'] = $request->get('price_1');
