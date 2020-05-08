@@ -42,7 +42,17 @@ class OrderDetail extends JsonResource
             "zip" => $this->address->zip,
         ];
 
-
+        $refund = null;
+        if($this['refund_status']) {
+            switch($this['refund_status']){
+                case OrderRefund::REFUND_STATUS_REFUNDING:
+                    $refund = $this->refunds()->where('status', OrderRefund::REFUND_STATUS_REFUNDING)->first();
+                    break;
+                case OrderRefund::REFUND_STATUS_REFUNDED:
+                    $refund = $this->refunds()->where('status', OrderRefund::REFUND_STATUS_REFUNDED)->first();
+                    break;
+            }
+        }
         return [
             "address" => $address,
             "items" => $items,
@@ -61,7 +71,7 @@ class OrderDetail extends JsonResource
             "refund_status_value" => $this->refund_status ? Order::refundStatusMap[$this->refund_status] : null,
             "send_at" => is_null($this->send_at) ? null : $this->send_at,
             "pay_at" => is_null($this->pay_at) ? null : $this->pay_at,
-            "refund_at" => $this->refund_status ? $this->refunds()->where('status', OrderRefund::REFUND_STATUS_REFUNDING)->first()->created_at->toDateTimeString() : null,
+            "refund_at" => $refund?$refund->created_at->toDateTimeString() : null,
             "success_at" => is_null($this->success_at) ? null : $this->success_at,
             "created_at" => is_null($this->created_at) ? null : $this->created_at->toDateTimeString(),
             "updated_at" => is_null($this->updated_at) ? null : $this->updated_at->toDateTimeString(),
