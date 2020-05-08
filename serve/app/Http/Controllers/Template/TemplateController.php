@@ -13,7 +13,7 @@ class TemplateController extends Controller
         $fileExists = Storage::exists($file);
         if(!$fileExists) return $this->jsonErrorResponse(401,"没有此主题文件");
         $json = Storage::get($file);
-        $json = json_decode($json,true);
+        $json = json_decode($json);
         return $this->jsonSuccessResponse($json);
     }
 
