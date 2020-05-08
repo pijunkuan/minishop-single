@@ -19,7 +19,7 @@ class ShipmentResource extends JsonResource
             "id" => $this['id'],
             "shipment_title" => $this['shipment_title'],
             "visibility" => $this['visibility'],
-            "cost_type" => Shipment::shipmentCostMap[$this['cost_type']],
+            "cost_type" => $this['need_cost']?Shipment::shipmentCostMap[$this['cost_type']]:"无运费",
             "cost_type_code" => $this['cost_type'],
             "need_cost" => $this['need_cost'],
             "price_1" => $this['price_1'],
