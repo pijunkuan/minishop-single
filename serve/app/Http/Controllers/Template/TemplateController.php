@@ -20,8 +20,8 @@ class TemplateController extends Controller
     public function put(Request $request)
     {
         $file = 'template\template.json';
-        $theme = $request->get('template');
-        if($theme){
+        if($request->has('template')){
+            $theme = $request->get('template');
             Storage::put($file,json_encode($theme));
         }
         return $this->jsonSuccessResponse();
