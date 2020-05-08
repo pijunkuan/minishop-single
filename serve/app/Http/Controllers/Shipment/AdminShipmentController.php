@@ -65,20 +65,21 @@ class AdminShipmentController extends Controller
 
     private function shipment(Request $request)
     {
-        $shipment = [
-            "shipment_title" => $request->get('shipment_title'),
-            "visibility" => $request->get('visibility'),
-            "need_cost" => $request->get('need_cost'),
-        ];
-        if ($shipment['need_cost']) {
-            if (!in_array($request->get('cost_type'), [Shipment::SHIPMENT_COST_WEIGHT, Shipment::SHIPMENT_COST_NUMERIC])) {
-                return $this->jsonErrorResponse(404, "计价类型不在范围内");
+        $shipment=array();
+        if ($request->get('shipment_title')) $shipment['shipment_title'] = $request->get('shipment_title');
+        if ($request->get('visibility')) $shipment['visibility'] = $request->get('visibility');
+        if ($request->has('need_cost')) $shipment['need_cost'] = $request->get('need_cost');
+        if (isset($shipment['need_cost'])) {
+            if ($shipment['need_cost']) {
+                if (!in_array($request->get('cost_type'), [Shipment::SHIPMENT_COST_WEIGHT, Shipment::SHIPMENT_COST_NUMERIC])) {
+                    return $this->jsonErrorResponse(404, "计价类型不在范围内");
+                }
+                $shipment['cost_type'] = $request->get('cost_type');
+                $shipment['price_1'] = $request->get('price_1');
+                $shipment['value_1'] = $request->get('value_1');
+                $shipment['price_2'] = $request->get('price_2');
+                $shipment['value_2'] = $request->get('value_2');
             }
-            $shipment['cost_type'] = $request->get('cost_type');
-            $shipment['price_1'] = $request->get('price_1');
-            $shipment['value_1'] = $request->get('value_1');
-            $shipment['price_2'] = $request->get('price_2');
-            $shipment['value_2'] = $request->get('value_2');
         }
         return $shipment;
     }
