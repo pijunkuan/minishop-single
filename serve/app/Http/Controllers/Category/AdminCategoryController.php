@@ -25,16 +25,16 @@ class AdminCategoryController extends Controller
     {
         if (Category::count() > 20) return $this->jsonErrorResponse(404, "超出最大分类数量（20）");
         $category = new Category([
-            "category_title" => $request->get('title'),
+            "category_title" => $request->get('category_title'),
             "visibility" => $request->get('visibility')
         ]);
         $category->save();
         return $this->jsonSuccessResponse($category);
     }
 
-    public function update(Category $category, CategoryStoreRequest $request)
+    public function update(Category $category, Request $request)
     {
-        if ($request->get('category_title')) $category['category_title'] = $request->get('title');
+        if ($request->get('category_title')) $category['category_title'] = $request->get('category_title');
         if ($request->has('visibility')) $category['visibility'] = $request->get('visibility');
         $category->save();
         return $this->jsonSuccessResponse($category);
