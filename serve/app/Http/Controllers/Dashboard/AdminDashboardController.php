@@ -59,11 +59,11 @@ class AdminDashboardController extends Controller
                 ];
                 break;
             case "image":
-                $bytes = round(Image::sum('img_bytes') / 1024, 2);
-                if($bytes > 1024*1024){
-                    $bytes_value = round($bytes / (1024*1024), 2) . " GB";
+                $bytes = round(Image::sum('img_bytes') / pow(1024,1), 2);
+                if($bytes > pow(1024,2)){
+                    $bytes_value = round($bytes / pow(1024,2), 2) . " GB";
                 }elseif ($bytes > 1024) {
-                    $bytes_value = round($bytes / 1024, 2) . " MB";
+                    $bytes_value = round($bytes / pow(1024,1), 2) . " MB";
                 } else {
                     $bytes_value = $bytes ." kB";
                 }
@@ -71,6 +71,7 @@ class AdminDashboardController extends Controller
                 $rs = [
                     "bytes" => $bytes,
                     "bytes_value" => $bytes_value,
+                    "bytes_percent" => round($bytes/(1 * pow(1024,2)) *100,3) ,
                     "count" => $count
                 ];
                 break;
