@@ -130,11 +130,13 @@ class AdminDashboardController extends Controller
     private function arraySum($datas)
     {
         $last = count($datas);
+        $temp = array();
         for ($i = 0; $i < $last; $i++) {
             if($i!= 0){
                 $datas[$i]["value"] += $datas[$i-1]['value'];
             }
+            $temp[] = $datas[$i]['value'];
         }
-        return $datas;
+        return $temp;
     }
 }
