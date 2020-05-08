@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Shipment;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Shipment\ShipmentRequest;
+use App\Http\Resources\Shipment\ShipmentResource;
 use App\Models\Shipment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -12,17 +13,17 @@ class AdminShipmentController extends Controller
 {
     public function index()
     {
-        return $this->jsonSuccessResponse(Shipment::get());
+        return $this->jsonSuccessResponse(ShipmentResource::collection(Shipment::get()));
     }
 
     public function store(ShipmentRequest $request)
     {
         $shipment = $this->shipment($request);
-        if(Shipment::count()>5) return $this->jsonErrorResponse(405,"超过最大运费模板设置范围（5）");
+        if (Shipment::count() > 5) return $this->jsonErrorResponse(405, "超过最大运费模板设置范围（5）");
         DB::beginTransaction();
         try {
             if ($shipment['visibility']) {
-                Shipment::where('visibility',1)->update(['visibility' => false]);
+                Shipment::where('visibility', 1)->update(['visibility' => false]);
             }
             $shipment = Shipment::create($shipment);
             DB::commit();
@@ -51,7 +52,7 @@ class AdminShipmentController extends Controller
         DB::beginTransaction();
         try {
             if ($update['visibility']) {
-                Shipment::where('visibility',1)->update(['visibility' => false]);
+                Shipment::where('visibility', 1)->update(['visibility' => false]);
             }
             $shipment->update($update);
             DB::commit();
