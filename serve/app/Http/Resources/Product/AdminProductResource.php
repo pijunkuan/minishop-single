@@ -19,12 +19,14 @@ class AdminProductResource extends JsonResource
         if ($image) {
             $img_url = $image->image->url;
         }
-        $price = $this->variants()->orderBy("price", "asc")->first()->value('price');
+        $low_variant = $this->variants()->orderBy("price", "asc")->first();
+        $quantity = $this->variants()->sum('quantity');
         return [
             "id"=>$this->id,
             "product_title" => $this->product_title,
             "img" => $img_url,
-            "price" => $price,
+            "price" => $low_variant['price'],
+            "stock"=>$quantity,
             "on_sale"=>$this->on_sale
         ];
     }
