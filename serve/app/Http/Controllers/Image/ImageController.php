@@ -15,7 +15,7 @@ class ImageController extends Controller
     public function index(Request $request)
     {
         $images = new Image();
-        $images = $images->paginate($request->get('pageSize'));
+        $images = $images->orderBy('id','desc')->paginate($request->get('pageSize'));
         return $this->jsonSuccessResponse(new ImageCollection($images));
     }
 
