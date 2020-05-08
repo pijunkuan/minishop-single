@@ -11,7 +11,9 @@ class TemplateController extends Controller
     public function get(){
         $file = 'template\template.json';
         $fileExists = Storage::exists($file);
-        if(!$fileExists) return $this->jsonErrorResponse(401,"没有此主题文件");
+        if(!$fileExists) {
+            Storage::put($file,json_encode(null));
+        }
         $json = Storage::get($file);
         $json = json_decode($json);
         return $this->jsonSuccessResponse($json);

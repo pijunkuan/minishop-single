@@ -11,7 +11,9 @@ class ThemeController extends Controller
     public function get(){
         $file = 'theme\theme.json';
         $fileExists = Storage::exists($file);
-        if(!$fileExists) return $this->jsonErrorResponse(401,"没有此主题文件");
+        if(!$fileExists){
+            Storage::put($file,json_encode(["theme"=>null]));
+        }
         $json = Storage::get($file);
         $json = json_decode($json,true);
         return $this->jsonSuccessResponse($json);

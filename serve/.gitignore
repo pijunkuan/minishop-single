@@ -2,6 +2,7 @@
 /public/hot
 /public/images
 /public/template
+/public/theme
 /public/storage
 /storage/*.key
 /vendor
