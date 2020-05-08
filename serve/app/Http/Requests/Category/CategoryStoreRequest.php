@@ -15,7 +15,7 @@ class CategoryStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            "title" => "required",
+            "category_title" => "required",
             "visibility" => "required|boolean"
         ];
     }
@@ -23,7 +23,7 @@ class CategoryStoreRequest extends FormRequest
     public function attributes()
     {
         return [
-            "title" => "分类名称",
+            "category_title" => "分类名称",
             "visibility" => "是否可见"
         ];
     }
