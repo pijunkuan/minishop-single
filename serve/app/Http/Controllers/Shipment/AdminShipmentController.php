@@ -67,7 +67,7 @@ class AdminShipmentController extends Controller
     {
         $shipment=array();
         if ($request->get('shipment_title')) $shipment['shipment_title'] = $request->get('shipment_title');
-        if ($request->get('visibility')) $shipment['visibility'] = $request->get('visibility');
+        if ($request->has('visibility')) $shipment['visibility'] = $request->get('visibility');
         if ($request->has('need_cost')) $shipment['need_cost'] = $request->get('need_cost');
         if (isset($shipment['need_cost'])) {
             if ($shipment['need_cost']) {
