@@ -22,8 +22,9 @@ class TemplateController extends Controller
         $file = 'template\template.json';
         if($request->has('template')){
             $theme = $request->get('template');
+            if(!count($theme)) $theme = null ;
             Storage::put($file,json_encode($theme));
         }
-        return $this->jsonSuccessResponse();
+        return $this->jsonSuccessResponse($theme);
     }
 }
