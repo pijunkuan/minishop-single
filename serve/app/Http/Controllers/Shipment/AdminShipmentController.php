@@ -46,7 +46,7 @@ class AdminShipmentController extends Controller
         return $this->jsonSuccessResponse();
     }
 
-    public function update(Shipment $shipment, ShipmentRequest $request)
+    public function update(Shipment $shipment, Request $request)
     {
         $update = $this->shipment($request);
         DB::beginTransaction();
