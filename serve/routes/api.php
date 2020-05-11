@@ -14,8 +14,11 @@ use Illuminate\Http\Request;
 */
 
 
-Route::any('version', function () {
+Route::any('version', function (Request $request) {
     echo "mini-shop v~1.0";
+    $resault = dns_get_record("pinuocaostudio.com",DNS_CNAME);
+    var_dump($resault);
+    var_dump($request->getRequestUri());
 });
 
 Route::prefix('customer')->namespace('Customer')->group(function () {
