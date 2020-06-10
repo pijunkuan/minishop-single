@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\MiniShop\Setting;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -10,10 +12,14 @@ class AppServiceProvider extends ServiceProvider
      * Register any application services.
      *
      * @return void
+     * @throws BindingResolutionException
      */
     public function register()
     {
-        //
+        //自定义配置同步
+        $this->app->make(Setting::class)->sync();
+        //多模板注册
+        $this->registerViewNamespace();
     }
 
     /**
@@ -24,6 +30,13 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
 
-        $this->loadViewsFrom(base_path('templates/BasicTheme/pages'),"BasicTheme");
+    }
+
+    /*
+     * 注册视图
+     */
+    protected function registerViewNamespace()
+    {
+        $this->loadViewsFrom(config('minishop.system.theme.path'),config('minishop.system.theme.use'));
     }
 }

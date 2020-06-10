@@ -13,9 +13,12 @@
 
 use Illuminate\Support\Facades\Artisan;
 
-Route::get('file',function(){
-    Artisan::call("system:init");
+Route::get('template/switch/{template}',function($template){
+   Artisan::call('template:switch',[
+       'template'=>$template
+   ]);
 });
+
 
 Route::get('/', function(){
 
@@ -24,10 +27,10 @@ Route::get('/', function(){
         "vue"=>[
             "type"=>"single"
         ],
-        "path"=>"BasicTheme::index"
+        "path"=>view_template_path("index")
     ];
 
-    return view('front.front',$data);
+    return view('front.index',$data);
 });
 
 Route::get('/test', function(){

@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\MiniShop\Setting;
 use Illuminate\Console\Command;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Filesystem\Filesystem;
 
 class SwitchTemplateCommand extends Command
@@ -35,20 +37,29 @@ class SwitchTemplateCommand extends Command
      * Execute the console command.
      *
      * @return mixed
+     * @throws BindingResolutionException
      */
     public function handle()
     {
         $template = $this->argument('template');
-        $path = base_path("templates/".$template."/assets");
-        if(!is_dir($path)){
-            $this->line('无需操作');
+        if(!is_dir("templates/{$template}")){
+            $this->line('模板不存在!');
             return;
         }
-        $dist = base_path("public/templates/".$template);
+        $view_path = base_path("templates/{$template}/pages");
 
-        if(!is_dir($dist)){
-            $file = new Filesystem();
-            $file->link($path,$dist);
+        $assets_path = base_path("templates/{$template}/assets");
+        $assets_dist = base_path("public/templates/".$template);
+        $config = array();
+        $config['minishop.system.theme.use'] = $template;
+        $config['minishop.system.theme.path'] = $view_path;
+        app()->make(Setting::class)->append($config);
+        $file = new Filesystem();
+        if(is_dir($assets_dist)){
+            $file->deleteDirectory($assets_dist);
+        }
+        if(is_dir($assets_path)){
+            $file->copyDirectory($assets_path,$assets_dist);
         }
         $this->line('success');
     }

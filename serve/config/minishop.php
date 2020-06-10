@@ -34,7 +34,7 @@ return [
 
         //主题
         'theme' => [
-            'use' => 'default',
+            'use' => 'BasicTheme',
             'path' => base_path('templates/BasicTheme/pages')
         ],
     ],
