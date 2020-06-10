@@ -40,7 +40,7 @@ class SwitchTemplateCommand extends Command
     {
         $template = $this->argument('template');
 
-        $path = base_path("templates/{$template}/asset");
+        $path = base_path("templates/{$template}/assets");
         if(!is_dir($path)){
             $this->line('无需操作');
             return;
