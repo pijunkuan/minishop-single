@@ -1,13 +1,10 @@
-@include('front.layouts.header')
+@extends('front.layouts.layouts')
+@section('body')
+    @if($vue['type']== "single")
+        @include($path)
+    @else
+        @include($path ?? 'front.404')
+    @endif
+@endsection
 
-<body>
-@if($vue['type']== "single")
-    @include($path)
-@else
-    @include($path ?? 'front.404')
-@endif
 
-@include('front.layouts.footer')
-</body>
-
-</html>
