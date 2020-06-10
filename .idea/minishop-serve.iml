@@ -19,6 +19,7 @@
       <excludeFolder url="file://$MODULE_DIR$/serve/vendor/facade/ignition-contracts" />
       <excludeFolder url="file://$MODULE_DIR$/serve/vendor/fideloper/proxy" />
       <excludeFolder url="file://$MODULE_DIR$/serve/vendor/filp/whoops" />
+      <excludeFolder url="file://$MODULE_DIR$/serve/vendor/fruitcake/laravel-cors" />
       <excludeFolder url="file://$MODULE_DIR$/serve/vendor/fzaninotto/faker" />
       <excludeFolder url="file://$MODULE_DIR$/serve/vendor/hamcrest/hamcrest-php" />
       <excludeFolder url="file://$MODULE_DIR$/serve/vendor/jakub-onderka/php-console-color" />

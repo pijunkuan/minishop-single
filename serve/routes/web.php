@@ -12,11 +12,13 @@
 */
 
 Route::get('/', function(){
+
+
     $data = [
         "vue"=>[
             "type"=>"single"
         ],
-        "path"=>"front.pages.user.home"
+        "path"=>"BasicTheme::index"
     ];
 
     return view('front.front',$data);
