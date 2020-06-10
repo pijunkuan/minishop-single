@@ -11,6 +11,12 @@
 |
 */
 
+use Illuminate\Support\Facades\Artisan;
+
+Route::get('file',function(){
+    Artisan::call("system:init");
+});
+
 Route::get('/', function(){
 
 
