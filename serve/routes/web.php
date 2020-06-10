@@ -11,6 +11,24 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function(){
+    $data = [
+        "vue"=>[
+            "type"=>"single"
+        ],
+        "path"=>"front.pages.user.home"
+    ];
+
+    return view('front.front',$data);
+});
+
+Route::get('/test', function(){
+    $data = [
+        "vue"=>[
+            "type"=>"multi"
+        ],
+        "path"=>"front.pages.user.home"
+    ];
+
+    return view('front.front',$data);
 });
