@@ -1,4 +1,129 @@
 /*
     模版主题默认配置文件
 */
+{
+    "theme": "summer",
+    "banners": [
+        {
+            "img": "http:\/\/test.tvbeu.info\/images\/202005081835127368.jpg",
+            "link": {
+                "name": "\u5206\u7c7b\u94fe\u63a5\uff1a\u6d4b\u8bd5\u5206\u7c7b",
+                "link": "Types",
+                "query": 1
+            },
+            "sort": 0
+        }
+    ],
+    "types": {
+        "visible": true,
+        "items": [
+            {
+                "img": "http:\/\/test.tvbeu.info\/images\/202005090003297069.png",
+                "title": "\u5168\u90e8\u5546\u54c1",
+                "link": {
+                    "link": null,
+                    "name": null,
+                    "query": null
+                },
+                "sort": 0
+            },
+            {
+                "img": "http:\/\/test.tvbeu.info\/images\/202005090013055661.png",
+                "title": "\u70ed\u5356\u5546\u54c1",
+                "link": {
+                    "link": null,
+                    "name": null,
+                    "query": null
+                },
+                "sort": 1
+            },
+            {
+                "img": "http:\/\/test.tvbeu.info\/images\/202005090014399198.png",
+                "title": "\u6700\u65b0\u4e0a\u67b6",
+                "link": {
+                    "link": null,
+                    "name": null,
+                    "query": null
+                },
+                "sort": 2
+            },
+            {
+                "img": "http:\/\/test.tvbeu.info\/images\/202005090031372019.png",
+                "title": "\u4f18\u60e0\u7279\u5356",
+                "link": {
+                    "link": null,
+                    "name": null,
+                    "query": null
+                },
+                "sort": 3
+            }
+        ]
+    },
+    "limit": {
+        "visible": true,
+        "endTime": "2020-05-29T16:00:00.000Z",
+        "items": [
+            {
+                "id": 23,
+                "img": "http:\/\/test.tvbeu.info\/images\/202005090522530323.jpg",
+                "product_title": "\u82ad\u4e50\u96c5\u8131\u6bdb\u818f",
+                "sub_title": "\u590f\u5b63\u5fc5\u5907",
+                "price": "20",
+                "ori_price": "40"
+            },
+            {
+                "id": 22,
+                "img": "http:\/\/test.tvbeu.info\/images\/202005090522007974.jpg",
+                "product_title": "\u897f\u73ed\u7259\u7f8e\u767d\u8eab\u4f53\u4e73",
+                "sub_title": "\u7f8e\u767d\u4eae\u80a4",
+                "price": "130",
+                "ori_price": "150"
+            },
+            {
+                "id": 21,
+                "img": "http:\/\/test.tvbeu.info\/images\/202005090520474333.jpg",
+                "product_title": "\u591a\u82ac\u575a\u679c\u78e8\u7802\u818f",
+                "sub_title": "\u7f8e\u767d\u53bb\u9e21\u76ae",
+                "price": "59",
+                "ori_price": "69"
+            }
+        ]
+    },
+    "newitem": {
+        "visible": true,
+        "items": [
+            {
+                "id": 20,
+                "img": "http:\/\/test.tvbeu.info\/images\/202005090519344555.png",
+                "product_title": "\u82ad\u4e50\u96c5\u725b\u5976\u8eab\u4f53\u4e73",
+                "sub_title": "\u4fdd\u6e7f\u6ecb\u6da6",
+                "price": "39.00",
+                "ori_price": "49"
+            },
+            {
+                "id": 21,
+                "img": "http:\/\/test.tvbeu.info\/images\/202005090520474333.jpg",
+                "product_title": "\u591a\u82ac\u575a\u679c\u78e8\u7802\u818f",
+                "sub_title": "\u7f8e\u767d\u53bb\u9e21\u76ae",
+                "price": "59",
+                "ori_price": "69"
+            }
+        ]
+    },
+    "ad": {
+        "visible": true,
+        "img": "http:\/\/test.tvbeu.info\/images\/202005090339508717.jpg",
+        "title": "\u82ad\u4e50\u96c5\u725b\u5976\u8eab\u4f53\u4e73",
+        "sub_itle": null,
+        "price": "39",
+        "ori_price": "20",
+        "link": {
+            "name": "\u5546\u54c1\u94fe\u63a5\uff1a\u82ad\u4e50\u96c5\u725b\u5976\u8eab\u4f53\u4e73",
+            "link": "Product",
+            "query": 20
+        },
+        "sub_title": "\u6ecb\u6da6\u62a4\u80a4 \u7f8e\u767d\u4eae\u6cfd"
+    },
+    "message": "5\u670830\u65e5\u524d\u4e0b\u5355\uff0c\u6bcf\u4e2a\u8ba2\u5355\u968f\u673a\u8d60\u9001\u5c0f\u793c\u7269\uff0c\u4e70\u7684\u591a\u9001\u7684\u591a\u54e6\uff5e"
+}
 
