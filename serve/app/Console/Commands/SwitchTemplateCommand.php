@@ -39,13 +39,13 @@ class SwitchTemplateCommand extends Command
     public function handle()
     {
         $template = $this->argument('template');
-
-        $path = base_path("templates/{$template}/assets");
+        $path = base_path("templates/".$template."/assets");
         if(!is_dir($path)){
             $this->line('无需操作');
             return;
         }
-        $dist = base_path("public/templates/{$template}");
+        $dist = base_path("public/templates/".$template);
+
         if(!is_dir($dist)){
             $file = new Filesystem();
             $file->link($path,$dist);
