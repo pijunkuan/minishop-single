@@ -6,4 +6,9 @@
     - version: 模版版本号
 */
 
+{
+    "name":"BasicTheme",
+    "author":"Cheng",
+    "version":"v1.0.0"
+}
 

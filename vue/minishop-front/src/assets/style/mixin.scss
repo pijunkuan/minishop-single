@@ -1,0 +1,119 @@
+@mixin base-background($val){
+    @each $themename , $theme in $themes {
+        [data-theme = '#{$themename}'] & {
+            background-color: map-get($map: $theme, $key: base-color ) * $val
+        }
+    }
+}
+
+@mixin base-color($val){
+    @each $themename , $theme in $themes {
+        [data-theme = '#{$themename}'] & {
+            color: map-get($map: $theme, $key: base-color ) * $val
+        }
+    }
+}
+
+@mixin base-border-color($val){
+    @each $themename , $theme in $themes {
+        [data-theme = '#{$themename}'] & {
+            border-color: map-get($map: $theme, $key: base-color ) * $val
+        }
+    }
+}
+
+@mixin sale-background($val){
+    @each $themename , $theme in $themes {
+        [data-theme = '#{$themename}'] & {
+            background-color: map-get($map: $theme, $key: sale-color ) * $val
+        }
+    }
+}
+
+@mixin sale-color($val){
+    @each $themename , $theme in $themes {
+        [data-theme = '#{$themename}'] & {
+            color: map-get($map: $theme, $key: sale-color ) * $val
+        }
+    }
+}
+
+@mixin sale-border-color($val){
+    @each $themename , $theme in $themes {
+        [data-theme = '#{$themename}'] & {
+            border-color: map-get($map: $theme, $key: sale-color ) * $val
+        }
+    }
+}
+
+@mixin price-background($val){
+    @each $themename , $theme in $themes {
+        [data-theme = '#{$themename}'] & {
+            background-color: map-get($map: $theme, $key: price-color ) * $val
+        }
+    }
+}
+
+@mixin price-color($val){
+    @each $themename , $theme in $themes {
+        [data-theme = '#{$themename}'] & {
+            color: map-get($map: $theme, $key: price-color ) * $val
+        }
+    }
+}
+
+@mixin price-border-color($val){
+    @each $themename , $theme in $themes {
+        [data-theme = '#{$themename}'] & {
+            border-color: map-get($map: $theme, $key: price-color ) * $val
+        }
+    }
+}
+
+@mixin block-background($val){
+    @each $themename , $theme in $themes {
+        [data-theme = '#{$themename}'] & {
+            background-color: map-get($map: $theme, $key: block-color ) * $val
+        }
+    }
+}
+
+@mixin block-color($val){
+    @each $themename , $theme in $themes {
+        [data-theme = '#{$themename}'] & {
+            color: map-get($map: $theme, $key: block-color ) * $val
+        }
+    }
+}
+
+@mixin block-border-color($val){
+    @each $themename , $theme in $themes {
+        [data-theme = '#{$themename}'] & {
+            border-color: map-get($map: $theme, $key: block-color ) * $val
+        }
+    }
+}
+
+@mixin element-background($val){
+    @each $themename , $theme in $themes {
+        [data-theme = '#{$themename}'] & {
+            background-color: map-get($map: $theme, $key: element-color ) * $val
+        }
+    }
+}
+
+@mixin element-color($val){
+    @each $themename , $theme in $themes {
+        [data-theme = '#{$themename}'] & {
+            color: map-get($map: $theme, $key: element-color ) * $val
+        }
+    }
+}
+
+@mixin element-border-color($val){
+    @each $themename , $theme in $themes {
+        [data-theme = '#{$themename}'] & {
+            border-color: map-get($map: $theme, $key: element-color ) * $val
+        }
+    }
+}

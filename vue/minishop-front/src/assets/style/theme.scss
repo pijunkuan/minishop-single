@@ -1,0 +1,53 @@
+// 主题1：夏日艳阳
+$summer-theme : (
+	base-color: #ffbe31,
+	price-color: #991f5c,
+	sale-color: #ff736c,
+	element-color: #ffbe31,
+	block-color: #ffbe31
+);
+
+// 主题2：清爽
+$water-theme : (
+	base-color: #06aeff,
+	price-color: #ff564c,
+	sale-color: #ff564c,
+	element-color: #06aeff,
+	block-color: #06aeff
+);
+
+// 主题3：春日绿
+$spring-theme : (
+	base-color: #9bd040,
+	price-color: #ff4538,
+	sale-color: #ff4538,
+	element-color: #9bd040,
+	block-color: #85b335
+);
+
+// 主题4：森林
+$forest-theme : (
+	base-color: #609544,
+	price-color: #f23e27,
+	sale-color: #f23e27,
+	element-color: #609544,
+	block-color: #52763e
+);
+
+// 主题5：静谧紫
+$purple-theme : (
+	base-color: #3335ac,
+	price-color: #f05c12,
+	sale-color: #f05c12,
+	element-color: #3335ac,
+	block-color: #6d8ac6
+);
+
+//定义映射集合
+$themes: (
+	summer-theme: $summer-theme,
+	water-theme: $water-theme,
+	spring-theme: $spring-theme,
+	forest-theme: $forest-theme,
+	purple-theme: $purple-theme
+);
