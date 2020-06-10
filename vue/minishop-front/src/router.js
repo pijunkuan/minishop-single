@@ -48,15 +48,10 @@ export const routes = [
 		component: r => require(['./pages/Search/index.vue'], r)
 	},
 	{
-		path:'/products',
+		path:'/product',
 		name:'Products',
 		meta:{ title:'全部商品', keepAlive:true },
 		component: r => require(['./pages/Products/index.vue'], r)
-	},
-	{
-		path:'/menu',
-		name:'Menu',
-		component: r => require(['./pages/Menu/index.vue'], r)
 	},
 	{
 		path:'/types',
@@ -78,48 +73,58 @@ export const routes = [
 	},
 	{
 		path:'/checkout',
-		name:'Checkout',
-		meta:{ title:'确认订单' },
-		component: r => require(['./pages/Checkout/Checkout.vue'], r)
+		children:[
+			{
+				path:'create',
+				name:'Checkout',
+				meta:{ title:'确认订单' },
+				component: r => require(['./pages/Checkout/Checkout.vue'], r)
+			},
+			{
+				path:'pay',
+				name:'Checkpay',
+				component: r => require(['./pages/Checkout/Checkpay.vue'], r)
+			},
+			{
+				path:'succeed',
+				name:'Checksuc',
+				component: r => require(['./pages/Checkout/Checksuc.vue'], r)
+			}
+		]
 	},
 	{
-		path:'/checkpay',
-		name:'Checkpay',
-		component: r => require(['./pages/Checkout/Checkpay.vue'], r)
-	},
-	{
-		path:'/checksuc',
-		name:'Checksuc',
-		component: r => require(['./pages/Checkout/Checksuc.vue'], r)
-	},
-	{
-		path:'/user/home',
-		name:'UserHome',
-		component: r => require(['./pages/User/Home.vue'], r)
-	},
-	{
-		path:'/user/wallet',
-		name:'UserWallet',
-		meta:{ title:'我的钱包' },
-		component: r => require(['./pages/User/Wallet.vue'], r)
-	},
-	{
-		path:'/user/order',
-		name:'UserOrder',
-		meta:{ title:'我的订单', keepAlive:true },
-		component: r => require(['./pages/User/Order.vue'], r)
-	},
-	{
-		path:'/user/order/detail',
-		name:'UserOrderDetail',
-		meta:{ title:'订单详情' },
-		component: r => require(['./pages/User/OrderDetail.vue'], r)
-	},
-	{
-		path:'/user/address',
-		name:'UserAddress',
-		meta:{ title:'我的地址' },
-		component: r => require(['./pages/User/Address.vue'], r)
+		path:'/user',
+		children:[
+			{
+				path:'home',
+				name:'UserHome',
+				component: r => require(['./pages/User/Home.vue'], r)
+			},
+			{
+				path:'wallet',
+				name:'UserWallet',
+				meta:{ title:'我的钱包' },
+				component: r => require(['./pages/User/Wallet.vue'], r)
+			},
+			{
+				path:'order',
+				name:'UserOrder',
+				meta:{ title:'我的订单', keepAlive:true },
+				component: r => require(['./pages/User/Order.vue'], r)
+			},
+			{
+				path:'order/detail',
+				name:'UserOrderDetail',
+				meta:{ title:'订单详情' },
+				component: r => require(['./pages/User/OrderDetail.vue'], r)
+			},
+			{
+				path:'address',
+				name:'UserAddress',
+				meta:{ title:'我的地址' },
+				component: r => require(['./pages/User/Address.vue'], r)
+			}
+		]
 	},
 	{
 		path:'*',

@@ -7,28 +7,17 @@ Vue.use(Router)
 
 export const allRoutes = [
 	{
-		path:'/center/session',
-		hidden:true,
-		component: r => require(['./pages/Redirect/index.vue'],r)
-	},
-	{
-		path:'/center/init',
-		hidden:true,
-		name:'ShopInit',
-		component: r => require(['./pages/Init/index.vue'],r)
+		path:'/login',
+		name:'Login',
+		component: r => require(['./pages/Login/index.vue'],r)
 	},
 	{
 		path:'/',
 		hidden:true,
-		redirect:'/center/dashboard'
+		redirect:'/dashboard'
 	},
 	{
-		path:'/center',
-		hidden:true,
-		redirect:'/center/dashboard'
-	},
-	{
-		path:'/center/dashboard',
+		path:'/dashboard',
 		hidden:false,
 		meta:{ title:'首页', icon:'iconshouye' },
 		component: Layout,
@@ -37,16 +26,7 @@ export const allRoutes = [
 		]
 	},
 	{
-		path:'/center/certify',
-		hidden:true,
-		meta:{ title:'认证', icon:'iconrenzheng' },
-		component: Layout,
-		children:[
-			{ path:'', name:'Certify', component: r => require(['./pages/Certify/index.vue'],r), hidden:true, meta:{ title:'认证', icon:'iconrenzheng' }}
-		]
-	},
-	{
-		path:'/center/order',
+		path:'/order',
 		hidden:false,
 		meta:{ title:'订单管理', icon:'icondingdan' },
 		component: Layout,
@@ -56,7 +36,7 @@ export const allRoutes = [
 		]
 	},
 	{
-		path:'/center/product',
+		path:'/product',
 		hidden:false,
 		meta:{ title:'商品管理', icon:'iconliwu' },
 		component: Layout,
@@ -68,7 +48,7 @@ export const allRoutes = [
 		]
 	},
 	{
-		path:'/center/customer',
+		path:'/customer',
 		hidden:false,
 		meta:{ title:'顾客管理', icon:'iconshequ'},
 		component: Layout,
@@ -77,26 +57,7 @@ export const allRoutes = [
 		]
 	},
 	{
-		path:'/center/sale',
-		hidden:true,
-		meta:{ title:'营销管理', icon:'iconkanjia'},
-		component: Layout,
-		children:[
-			{ path:'coupon/list', name:'CouponHome', component: r => require(['./pages/Sale/Coupon/CouponList.vue'],r), meta:{ title:'优惠券', icon:'iconyouhuiquan' }, hidden:false },
-			{ path:'coupon/edit', name:'CouponEdit', component: r => require(['./pages/Sale/Coupon/CouponEdit.vue'],r), meta:{ title:'优惠券修改', icon:'iconyouhuiquan' }, hidden:true },
-			{ path:'coupon/add', name:'CouponAdd', component: r => require(['./pages/Sale/Coupon/CouponAdd.vue'],r), meta:{ title:'优惠券添加', icon:'iconyouhuiquan' }, hidden:true },
-
-			{ path:'discount/list', name:'DiscountHome', component: r => require(['./pages/Sale/Discount/DiscountList.vue'],r), meta:{ title:'满减满折', icon:'iconkanjia' }, hidden:false },
-			{ path:'discount/edit', name:'DiscountEdit', component: r => require(['./pages/Sale/Discount/DiscountEdit.vue'],r), meta:{ title:'修改满减满折', icon:'iconkanjia' }, hidden:true },
-			{ path:'discount/add', name:'DiscountAdd', component: r => require(['./pages/Sale/Discount/DiscountAdd.vue'],r), meta:{ title:'创建满减满折', icon:'iconkanjia' }, hidden:true },
-
-			{ path:'match/list', name:'MatchHome', component: r => require(['./pages/Sale/Match/MatchList.vue'],r), meta:{ title:'搭配宝', icon:'iconmaiyizengyi' }, hidden:false },
-			{ path:'match/edit', name:'MatchEdit', component: r => require(['./pages/Sale/Match/MatchEdit.vue'],r), meta:{ title:'搭配宝修改', icon:'iconmaiyizengyi' }, hidden:true },
-			{ path:'match/add', name:'MatchAdd', component: r => require(['./pages/Sale/Match/MatchAdd.vue'],r), meta:{ title:'搭配宝添加', icon:'iconmaiyizengyi' }, hidden:true }
-		]
-	},
-	{
-		path:'/center/theme',
+		path:'/theme',
 		hidden:false,
 		meta:{ title:'主题管理', icon:'iconfaxian'},
 		component: Layout,
@@ -106,16 +67,7 @@ export const allRoutes = [
 		]
 	},
 	{
-		path:'/center/plugins',
-		hidden:false,
-		meta:{ title:'插件管理', icon:'icontishi'},
-		component: Layout,
-		children:[
-			{ path:'list', name:'PluginList', component: r => require(['./pages/Plugins/index.vue'],r), meta:{ title:'插件管理', icon:'icontishi' }, hidden:false }
-		]
-	},
-	{
-		path:'/center/image',
+		path:'/image',
 		hidden:false,
 		meta:{ title:'图片管理', icon:'icontupian'},
 		component: Layout,
@@ -124,7 +76,7 @@ export const allRoutes = [
 		]
 	},
 	{
-		path:'/center/settings',
+		path:'/settings',
 		hidden:false,
 		meta:{ title:'基础设置', icon:'iconshezhi'},
 		component: Layout,
@@ -136,7 +88,7 @@ export const allRoutes = [
 		]
 	},
 	{
-		path:'/center/user',
+		path:'/user',
 		hidden:true,
 		meta:{title:'个人设置',icon:"iconxiaolian"},
 		component:Layout,

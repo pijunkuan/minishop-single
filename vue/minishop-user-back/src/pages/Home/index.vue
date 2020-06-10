@@ -79,22 +79,6 @@
 			<div class="web-title"><strong>{{ $store.getters.shop_name }}</strong></div>
 			<div class="web-url">{{ $store.getters.shop_url + '.' + $store.getters.shop_host }}</div>
 		</div>
-		<div>
-			<div class="web-item">
-				<div>认证状况</div>
-				<div>
-					<div>{{ certify_type }}<span class="inline-button" @click="$router.push({name:'Certify'})">查看</span></div>
-				</div>
-			</div>
-			<div class="web-item">
-				<div>当前版本</div>
-				<div class="web-item__level"><i class="iconfont iconhuiyuan"></i><span>{{ $store.getters.shop_level }}</span><span class="inline-button" @click="toUpgrade('upgrade')">升级</span></div>
-			</div>
-			<div class="web-item">
-				<div>有效期至</div>
-				<div>{{ $store.getters.shop_exp }}<span class="inline-button" @click="toUpgrade('long')">续费</span></div>
-			</div>
-		</div>
 		<div class="web-service">
 			<div class="service-title">联系客服</div>
 			<div class="service-info">
@@ -104,82 +88,12 @@
 			</div>
 		</div>
 	</div>
-	<el-dialog :visible="upVisible" :title="upTitle[upType]" @close="closeOrder">
-		<div v-if="upType === 'upgrade'">
-			<div class="item-title">当前商城版本</div>
-			<div class="item-info">{{ $store.getters.shop_level }}</div>
-			<div v-loading="upLoading">
-				<div v-if="!toHighest" class="item-title" style="margin-top:30px">选择商城版本</div>
-				<div v-if="!toHighest">
-					<el-radio-group v-model="shop_order.level" size="small">
-						<el-radio v-for="(item,index) in shop_levels" :key="index" border :label="item" :disabled="item.level_name === $store.getters.shop_level">{{ item.level_name }}</el-radio>
-					</el-radio-group>
-					<div v-if="shop_order.level" class="item-tip">{{ shop_order.level.level_name }}：<span v-for="(item,index) in shop_order.level.level_content" :key="index">{{ item + (index === shop_order.level.level_content.length - 1 ? '' : '，') }}</span></div>
-					<div class="item-title">购买时长</div>
-					<div>
-						<el-select v-model="shop_order.variant" size="small">
-							<el-option v-for="(item,index) in variants" :key="index" :label="item.time + '个月'" :value="item.variant_id"></el-option>
-						</el-select>
-					</div>
-					<div class="item-title">支付方式</div>
-					<div>
-						<el-radio-group v-model="shop_order.payment" size="small">
-							<el-radio-button v-for="(item,index) in payments" :key="index" :label="item">{{ item.method_title }}</el-radio-button>
-						</el-radio-group>
-					</div>
-					<div v-if="!upLoading" class="item-total">
-						<span>总计：</span><span>¥ <strong>{{ variants.filter((v)=>{ return v.variant_id === shop_order.variant })[0].price }}</strong></span>
-						<div><span>¥ <strong>{{ variants.filter((v)=>{ return v.variant_id === shop_order.variant })[0].price / variants.filter((v)=>{ return v.variant_id === shop_order.variant })[0].time }}</strong>/月</span></div>
-					</div>
-				</div>
-				<div v-if="toHighest">您已是最高版本，无需升级</div>
-			</div>
-		</div>
-		<div v-if="upType === 'long'">
-			<div class="item-title">商城到期时间</div>
-			<div class="item-info">{{ $store.getters.shop_exp }}</div>
-			<div v-loading="upLoading">
-				<div class="item-title" style="margin-top:30px">购买时长</div>
-				<div>
-					<el-select v-model="shop_order.variant" size="small">
-						<el-option v-for="(item,index) in variants" :key="index" :label="item.time + '个月'" :value="item.variant_id"></el-option>
-					</el-select>
-				</div>
-				<div class="item-title">支付方式</div>
-				<div>
-					<el-radio-group v-model="shop_order.payment" size="small">
-						<el-radio-button v-for="(item,index) in payments" :key="index" :label="item">{{ item.method_title }}</el-radio-button>
-					</el-radio-group>
-				</div>
-				<div v-if="!upLoading" class="item-total">
-					<span>总计：</span><span>¥ <strong>{{ variants.filter((v)=>{ return v.variant_id === shop_order.variant })[0].price }}</strong></span>
-					<div><span>¥ <strong>{{ variants.filter((v)=>{ return v.variant_id === shop_order.variant })[0].price / variants.filter((v)=>{ return v.variant_id === shop_order.variant })[0].time }}</strong>/月</span></div>
-				</div>
-			</div>
-		</div>
-		<div slot="footer">
-			<el-button size="small" @click="closeOrder">关闭</el-button>
-			<el-button type="primary" size="small" v-if="!toHighest" :loading="btnLoading" @click="confirmOrder">{{ upType === 'upgrade' ? '确认升级' : '确认续费' }}</el-button>
-		</div>
-	</el-dialog>
-	<el-dialog :visible="tipShow" title="提示" :show-close="false" :close-on-click-modal="false" :close-on-press-escape="false" center>
-		<div class="dialog-tip">
-            <div>付款过程中请勿关闭当前页面，付款成功后请点击“付款成功”按钮，即可创建商城并设置商城基础信息</div>
-            <div>付款失败或取消付款，请点击“取消付款”按钮，关闭弹窗</div>
-        </div>
-        <div slot="footer">
-            <el-button size="small" @click="tipShow = false">取消付款</el-button>
-            <el-button size="small" type="primary" @click="validPay" :loading="validLoading">付款成功</el-button>
-        </div>
-	</el-dialog>
 </div>
 </template>
 
 <script>
 import { get_static_data } from "@/api/static"
-import { get_certify } from '@/api/certify'
 import { get_config } from '@/api/sys'
-import { get_shop_level, get_payments, create_order, get_order } from '@/api/backservice'
 import  WaterLiquid  from "@/components/Echarts/WaterLiquid"
 import  MutiLine  from "@/components/Echarts/MutiLine"
 export default {
@@ -293,118 +207,10 @@ export default {
 				this.lineShow = true
 			})
 		},
-		getCertify(){
-			get_certify().then(r=>{
-				let _data = r.data.body
-				if(!_data) this.certify_type = '未认证'
-					else if(_data.status === 'failed') this.certify_type = '认证失败'
-						else this.certify_type = _data.type_value
-			})
-		},
 		getService(){
 			get_config().then(r=>{
 				this.service.qrcode = r.data.service_qr_code
 			})
-		},
-		toUpgrade(type){
-			this.upType = type
-			this.upVisible = true
-			this.upLoading = true
-			get_payments().then(res=>{
-				this.payments = res.data.body
-				this.shop_order.payment = this.payments[0]
-			})
-			get_shop_level().then(r=>{
-				this.shop_levels = r.data.body
-				if(type === 'upgrade' && this.$store.getters.shop_level === this.shop_levels[1].level_name){
-					this.toHighest = true
-				}else if(type === 'long'){
-					this.shop_order.level = ''
-					this.variants = this.shop_levels.filter((v)=>{return v.level_name === this.$store.getters.shop_level})[0].variants
-					this.shop_order.variant = this.variants[0].variant_id
-					this.toHighest = false
-				}else{
-					this.shop_order.level = this.shop_levels[1]
-					this.variants = this.shop_order.level.variants
-					this.shop_order.variant = this.variants[0].variant_id
-					this.toHighest = false
-				}
-				this.upLoading = false
-			}).catch(()=>{
-				this.upLoading = false
-			})
-		},
-		closeOrder(){
-			this.upType = ''
-			this.upVisible = false
-			this.toHighest = false
-			this.shop_order = {
-				level:'',
-				variant:'',
-				payment:''
-			}
-		},
-		confirmOrder(){
-			this.btnLoading = true
-			let _data = {
-				shop_id:this.$store.getters.shop_id,
-				payment_method:this.shop_order.payment.method_code,
-				item:{
-					type:'level',
-					item_id:this.shop_order.variant
-				}
-			}
-			let _price = this.variants.filter((v)=>{ return v.variant_id === this.shop_order.variant })[0].price
-			create_order(_data).then(r=>{
-				if(_price * 1 === 0){
-					this.$message.success({
-						message:this.upTitle[this.upType] + '成功',
-						duration:2000
-					})
-					this.$store.dispatch('getShopInfo').then(()=>{
-						this.$router.go(0)
-						this.closeOrder()
-						this.order_no = ''
-					})
-				}else{
-					this.order_no = r.data.body.no
-					this.$message.success({
-						message:'正在跳转支付，请勿关闭当前页面',
-						duration:2000
-					})
-					setTimeout(()=>{
-                        window.open(r.data.body.payment.pay_url,'_blank')
-                        this.tipShow = true
-                        this.btnLoading = false
-                        this.closeOrder()
-                    },2000)
-				}
-			}).catch(()=>{
-				this.btnLoading = false
-			})
-		},
-		validPay(){
-			this.validLoading = true
-            get_order(this.order_no).then(r=>{
-                this.validLoading = false
-                this.order_no = ''
-                if(r.data.body.status_code === 'paid'){
-                    this.$message.success({
-                        message:'订单支付成功',
-                        duration:2000
-                    })
-                    this.$store.dispatch('getShopInfo').then(()=>{
-						this.$router.go(0)
-					})
-                }else{
-                    this.$message.error({
-                        message:'未检测到成功的支付订单，请检查支付是否成功，如果确认支付成功，请联系客服核对并开通商城',
-                        duration:4000
-                    })
-                }
-            }).catch(()=>{
-				this.validLoading = false
-            })
 		}
 	},
 	created(){
@@ -412,7 +218,6 @@ export default {
 		this.getImage()
 		this.getCustomer()
 		this.getOrderLine()
-		this.getCertify()
 		this.getService()
 	}
 }

@@ -11,7 +11,6 @@ import { Message } from 'element-ui'
 
 const service = axios.create({
 	baseURL:defaultSettings.apiURL
-	// baseURL:location.origin + '/api/center'
 })
 // 重写弹窗，判断在已经有弹窗的情况下不出现弹窗
 class hasMessage {

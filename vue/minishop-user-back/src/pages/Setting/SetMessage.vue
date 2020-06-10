@@ -6,7 +6,6 @@
         </div>
         <div>
             <span>短信通知：{{ $store.getters.shop_sms }} 条可用</span>
-            <el-button style="margin-left:10px" type="primary" size="mini" @click="toBuy">购买短信</el-button>
             <el-button style="margin-left:10px" type="primary" size="mini" @click="smsHistory">短信使用历史</el-button>
         </div>
     </div>
@@ -50,34 +49,6 @@
             </div>
         </div>
     </div>
-    <el-dialog :visible="buyVisible" title="购买短信" width="800px" :before-close="closeBuy">
-        <div v-loading="payLoading">
-            <div class="buy-item">
-                <div style="width:70px">购买数量</div>
-                <div>
-                    <el-radio-group v-model="message_type" size="small">
-                        <el-radio-button v-for="(item,index) in message_types" :key="index" :label="item">{{ (item.time * 1).toFixed(0) }}</el-radio-button>
-                    </el-radio-group>
-                </div>
-            </div>
-            <div class="buy-item">
-                <div style="width:70px">支付方式</div>
-                <div>
-                    <el-radio-group v-model="current_payment" size="small">
-                        <el-radio-button v-for="(pay,index) in payments" :key="index" :label="pay.method_code">{{ pay.method_title }}</el-radio-button>
-                    </el-radio-group>
-                </div>
-            </div>
-            <div class="buy-price">
-                <div>共购买<strong> {{ (message_type.time * 1).toFixed(0) }} </strong>条短信</div>
-                <div style="margin-top:5px">应付金额 <span>¥<strong> {{ message_type.price }} </strong></span></div>
-            </div>
-            <div class="buy-footer">
-                <el-button size="small" @click="closeBuy">取消</el-button>
-                <el-button size="small" type="primary" @click="confirmBuy" :loading="buyLoading">确定</el-button>
-            </div>
-        </div>
-    </el-dialog>
     <el-dialog :visible="signVisible" title="设置签名" width="500px" :before-close="closeSign">
         <div v-loading="signLoading" class="sign-page">
             <div>
@@ -156,7 +127,6 @@
 </template>
 
 <script>
-import { get_payments, get_sms_type, create_order, get_order } from '@/api/backservice'
 import { get_sms_template, update_sms_template_status, get_sms_sign, delete_sms_sign, update_sms_sign, create_sms_sign, get_sms_history } from '@/api/sms'
 export default{
     data(){
@@ -232,78 +202,6 @@ export default{
                 this.loading = false
             }).catch(()=>{
                 this.loading = false
-            })
-        },
-        toBuy(){
-            this.buyVisible = true
-            this.payLoading = true
-            get_sms_type().then(r=>{
-                this.message_types = r.data.body[0].variants
-                this.message_types.sort((a,b)=>{ return a.time * 1 - b.time * 1 })
-                this.message_type = this.message_types[0]
-                get_payments().then(r=>{
-                    this.payments = r.data.body
-                    this.current_payment = this.payments[0].method_code
-                    this.payLoading = false
-                }).catch(()=>{
-                    this.payLoading = false
-                })
-            }).catch(()=>{
-                this.payLoading = false
-            })
-        },
-        closeBuy(){
-            this.buyVisible = false
-        },
-        confirmBuy(){
-            this.buyLoading = true
-            let _data = {
-                shop_id:this.$store.getters.shop_id,
-                payment_method:this.current_payment,
-                item:{
-                    type:'sms',
-                    item_id:this.message_type.variant_id
-                }
-            }
-            create_order(_data).then(r=>{
-                this.order_no = r.data.body.no
-                this.$message.success({
-                    message:'正在跳转支付，请勿关闭当前页面',
-                    duration:2000
-                })
-                setTimeout(()=>{
-                    window.open(r.data.body.payment.pay_url,'_blank')
-                    this.buyLoading = false
-                    this.buyVisible = false
-                    this.tipShow = true
-                },2000)
-            }).catch(()=>{
-                this.buyLoading = false
-            })
-        },
-        validPay(){
-            this.validLoading = true
-            get_order(this.order_no).then(r=>{
-                this.validLoading = false
-                if(r.data.body.status_code === 'paid'){
-                    this.$message.success({
-                        message:'短信购买成功',
-                        duration:1000
-                    })
-                    setTimeout(()=>{
-                        this.$store.dispatch('getUserInfo')
-                        this.tipShow = false
-                    },1000)
-                }else{
-                    this.$message.error({
-                        message:'未检测到成功的支付订单，请检查支付是否成功，如果确认支付成功，请联系客服核对',
-                        duration:4000
-                    })
-                    this.tipShow = false
-                }
-            }).catch(()=>{
-                this.validLoading = false
-                this.tipShow = false
             })
         },
         editSign(){

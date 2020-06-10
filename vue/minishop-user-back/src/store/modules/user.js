@@ -1,9 +1,10 @@
-import { getToken, setToken, removeToken } from '@/utils/auth'
-import { get_user } from '@/api/shop'
+import { getToken, setToken, removeToken, getExtime, setExtime, removeExtime } from '@/utils/auth'
+import { login, get_user, edit_user } from '@/api/login'
 
 const user = {
 	state:{
 		token:getToken(),
+		expire_time:getExtime(),
 		username:''
 	},
 	mutations:{
@@ -12,14 +13,24 @@ const user = {
 		},
 		SET_TOKEN:(state,token)=>{
 			state.token = token
+		},
+		SET_TIME:(state, time)=>{
+			state.expire_time = time
 		}
 	},
 	actions:{
-		retakeToken({commit},token){
-			return new Promise((resolve)=>{
-				commit('SET_TOKEN',token)
-				setToken(token)
-				resolve()
+		login({commit},info){
+			return new Promise((resolve,reject)=>{
+				login(info).then(r=>{
+					let expire = new Date().getTime() + r.data.body.expires_in * 1000
+					commit('SET_TOKEN',r.data.body.access_token)
+					commit('SET_TIME',expire)
+					setToken(r.data.body.access_token)
+					setExtime(expire)
+					resolve(r)
+				}).catch(e=>{
+					reject(e)
+				})
 			})
 		},
 		getUserInfo({commit}){
@@ -32,9 +43,27 @@ const user = {
 				})
 			})
 		},
+		edit({commit},data){
+			return new Promise((resolve,reject)=>{
+				edit_user(data).then(r=>{
+					let expire = new Date().getTime() + r.data.body.expires_in * 1000
+					commit('SET_TOKEN',r.data.body.access_token)
+					commit('SET_TIME',expire)
+					setToken(r.data.body.access_token)
+					setExtime(expire)
+					resolve(r)
+				}).catch(e=>{
+					reject(e)
+				})
+			})
+		},
 		logout({commit}){
-			removeToken()
-			commit('SET_TOKEN','') 
+			return new Promise((resolve)=>{
+				removeToken()
+				removeExtime()
+				commit('SET_TOKEN','')
+				resolve()
+			})
 		}
 	}
 }
