@@ -16,7 +16,6 @@
         </div>
     </div>
     <div class="header-item header-item-side">
-        <span @click="toCenter" style="cursor:pointer;position:relative;top:-1px;margin-right:20px">后台中心</span>
         <span @click="toLogout" style="cursor:pointer">
             <span style="position:relative;top:-1px;margin-right:10px">退出</span>
             <i class="iconfont icontuichu1"></i>
@@ -46,14 +45,11 @@ export default{
                     message:'已安全登出',
                     duration:1000
                 })
-                location.href = '//account.' + this.$store.getters.shop_host + '/login'
+                this.$router.push({name:'Login'})
             })
         },
         toEdit(){
             if(this.$route.name !== 'UserEdit') this.$router.push({name:'UserEdit'})
-        },
-        toCenter(){
-            location.href = '//account.' + this.$store.getters.shop_host
         },
         toShop(){
             window.open('//' + this.$store.getters.shop_url + '.' + this.$store.getters.shop_host, '_blank')

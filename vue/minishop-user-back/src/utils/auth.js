@@ -26,3 +26,15 @@ export function setLogo(logo){
 export function removeLogo(){
 	return Cookies.remove('userLogo')
 }
+
+export function getExtime(){
+	return Cookies.get('backexTime')
+}
+
+export function setExtime(extime){
+	return Cookies.set('backexTime',extime)
+}
+
+export function removeExtime(){
+	return Cookies.remove('backexTime')
+}

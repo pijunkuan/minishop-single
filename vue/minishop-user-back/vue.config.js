@@ -11,7 +11,7 @@ function resolve(dir) {
 }
 
 module.exports = {
-  assetsDir: ('templates/center'),
+  assetsDir: ('back'),
   filenameHashing:false,
   chainWebpack: config => {
     if(isProduction){
