@@ -98,6 +98,24 @@
       <path value="$PROJECT_DIR$/serve/vendor/vlucas/phpdotenv" />
       <path value="$PROJECT_DIR$/serve/vendor/facade/ignition-contracts" />
       <path value="$PROJECT_DIR$/serve/vendor/fruitcake/laravel-cors" />
+      <path value="$PROJECT_DIR$/serve/vendor/symfony/polyfill-php80" />
+      <path value="$PROJECT_DIR$/serve/vendor/symfony/psr-http-message-bridge" />
+      <path value="$PROJECT_DIR$/serve/vendor/nyholm/psr7" />
+      <path value="$PROJECT_DIR$/serve/vendor/defuse/php-encryption" />
+      <path value="$PROJECT_DIR$/serve/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/serve/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/serve/vendor/phpseclib/phpseclib" />
+      <path value="$PROJECT_DIR$/serve/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/serve/vendor/firebase/php-jwt" />
+      <path value="$PROJECT_DIR$/serve/vendor/laravel/passport" />
+      <path value="$PROJECT_DIR$/serve/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/serve/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/serve/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/serve/vendor/league/oauth2-server" />
+      <path value="$PROJECT_DIR$/serve/vendor/league/event" />
+      <path value="$PROJECT_DIR$/serve/vendor/laminas/laminas-diactoros" />
+      <path value="$PROJECT_DIR$/serve/vendor/laminas/laminas-zendframework-bridge" />
+      <path value="$PROJECT_DIR$/serve/vendor/php-http/message-factory" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />
