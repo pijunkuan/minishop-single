@@ -4,15 +4,22 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="preload" href="/base.js" as="script" crossorigin>
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_1789330_us8cukpmgy.css">
+    <link rel="stylesheet" href="/back/plugin.css">
     <title>test</title>
   </head>
   <body>
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
-    <div id="app"></div>
+    <div id="app">
+      <div class="theme-base"></div>
+    </div>
+
+    <script src="/back/plugin.js"></script>
+    <script src="/base.js" crossorigin></script>
     <!-- built files will be auto injected -->
   </body>
 </html>

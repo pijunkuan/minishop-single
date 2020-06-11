@@ -4,6 +4,7 @@
 
 import axios from 'axios'
 import store from '@/store'
+import router from '@/router'
 import { getToken } from '@/utils/auth'
 import defaultSettings from '@/settings'
 import { Message } from 'element-ui'
@@ -60,12 +61,8 @@ service.interceptors.response.use(
 				message:'登录超时，请重新登录',
 				duration:0
 			})
-            let _url = location.origin.split('.')
-            let _host = "//account."+_url[_url.length-2]+"."+_url[_url.length-1]+"/login"
 			store.dispatch('logout')
-			setTimeout(()=>{
-				location.href = _host
-			},500)	
+			router.push({name:'Login'})
 		}
 		return Promise.reject(error)
 	}

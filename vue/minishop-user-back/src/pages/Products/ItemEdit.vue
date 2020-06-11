@@ -4,6 +4,7 @@
         <el-button size="small" @click="$router.go(-1)">返回</el-button>
         <span class="page-item-title">{{ item.product.product_title }}</span>
         <span style="float:right">
+            <x-component is="sk-address-edit"></x-component>
             <el-button size="small" type="primary" @click="toPreview">手机预览</el-button>
             <el-button size="small" type="primary" @click="toShare">分享商品</el-button>
             <el-button size="small" type="primary" @click="confirmChange">保存</el-button>
