@@ -2,7 +2,7 @@
 home: true
 heroImage: /logo.jpg
 actionText: 快速上手
-actionLink: /pages/guide/
+actionLink: /pages/guide/intro
 features:
 - title: 简洁至上
   details: 最小化商城单元结构，可快速搭建，并根据业务需求无限扩展。

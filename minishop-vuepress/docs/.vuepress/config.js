@@ -6,8 +6,8 @@ module.exports = {
 	themeConfig: {
 		nav:[
 			{ text:'介绍', link:'/pages/guide/' },
-			{ text:'教程', link:'/blogs/' },
-			{ text:'文档', link:'/docs/' },
+			{ text:'实操', link:'/pages/blogs/' },
+			{ text:'文档', link:'/pages/docs/' },
 			{ 
 				text:'GitHub',
 				items:[
@@ -17,12 +17,25 @@ module.exports = {
 			}
 		],
 		sidebar:[
-			'/pages/guide/',
 			{
-				title:'教程',
+				title:'项目介绍',
 				collapsable:false,
 				children:[
-					'/pages/blogs/'
+					'/pages/guide/intro.md'
+				]
+			},
+			{
+				title:'项目实操——后端',
+				collapsable:false,
+				children:[
+					
+				]
+			},
+			{
+				title:'项目实操——前端',
+				collapsable:false,
+				children:[
+					'/pages/blogs/frontend/create.md'
 				]
 			}
 		]
